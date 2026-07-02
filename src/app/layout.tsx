@@ -28,11 +28,11 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "LiveX / Surface Map",
-    template: "%s — LiveX / Surface Map",
+    default: "LiveX AI",
+    template: "%s · LiveX AI",
   },
   description:
-    "An internal LiveX AI strategy universe. Explore how a single LiveX intelligence can appear across physical space, mobile, web, voice, and follow-up — through two distinct GTM motions.",
+    "An internal LiveX AI strategy universe. Explore how a single LiveX intelligence can appear across physical space, mobile, web, voice, and follow-up, through two distinct GTM motions.",
   robots: { index: false, follow: false },
 };
 

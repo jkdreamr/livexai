@@ -30,35 +30,35 @@ export const STRATEGIES: Strategy[] = [
     id: "col-treehacks",
     slug: "treehacks-builder-guide",
     world: "college",
-    title: "TreeHacks × LiveX AI — The Builder Guide",
+    title: "TreeHacks × LiveX AI: The Builder Guide",
     shortTitle: "TreeHacks Builder Guide",
     status: "Concept activation",
     flagship: true,
     priority: 1,
     visualTheme: "constellation",
-    brand: { name: "TreeHacks", accent: "#42c58a", accentDeep: "#2a8a5e" },
+    brand: { name: "TreeHacks", accent: "#2f80ff", accentDeep: "#0066ff" },
     oneLineThesis:
-      "A LiveX guide that greets a builder in the room and stays with them — from the hackathon floor to their phone to the weeks after.",
+      "A LiveX guide that greets a builder in the room and stays with them, from the hackathon floor to their phone to the weeks after.",
     strategicQuestion:
-      "Can one LiveX intelligence own the full arc of a builder's event — arrival, momentum, and everything after — while it remembers who they are across every surface?",
+      "Can one LiveX intelligence own the full arc of a builder's event (arrival, momentum, and everything after) while it remembers who they are across every surface?",
     targetAudience:
       "Student builders arriving at a high-energy collegiate hackathon: first-timers looking for a team, returning hackers chasing a sponsor track, and the curious who want to see what LiveX is.",
     partnerType: "Collegiate hackathon / student builder event",
     proposedPartner:
-      "TreeHacks — collegiate hackathon (illustrative concept target, not a claimed partnership)",
+      "TreeHacks, a collegiate hackathon (illustrative concept target, not a claimed partnership)",
     primarySurface: "physical",
     connectedSurfaces: ["physical", "voice", "qr", "mobile", "followup"],
     whyLiveX:
-      "The value is not a hologram at an event — plenty of vendors can render a face. The value is continuity: a guide that captures intent in the room and carries it, intact, onto the builder's phone and into the days after. That hand-off, with memory, is exactly what LiveX exists to do and what a static booth or a chatbot cannot.",
+      "The value is not a hologram at an event. Plenty of vendors can render a face. The value is continuity: a guide that captures intent in the room and carries it, intact, onto the builder's phone and into the days after. That hand-off, with memory, is exactly what LiveX exists to do and what a static booth or a chatbot cannot.",
     whyNow:
-      "Hackathons are the densest concentration of technical builders LiveX will ever stand in front of — future founders, future customers, future hires — and they arrive primed to try new tools. It is a rare setting where a physical-to-digital demo is also the product doing its actual job.",
+      "Hackathons are the densest concentration of technical builders LiveX will ever stand in front of, the future founders, customers, and hires, and they arrive primed to try new tools. It is a rare setting where a physical-to-digital demo is also the product doing its actual job.",
     userJourney: [
       {
         id: "arrival",
         surface: "physical",
-        title: "Arrival — visual curiosity",
+        title: "Arrival: visual curiosity",
         detail:
-          "Walking in, a builder sees a stylized LiveX guide: a luminous, abstract presence at a kiosk, not a cartoon face. It turns toward them and asks one question — “What are you here to build?”",
+          "Walking in, a builder sees a stylized LiveX guide: a luminous, abstract presence at a kiosk, not a cartoon face. It turns toward them and asks one question: “What are you here to build?”",
       },
       {
         id: "intent",
@@ -72,21 +72,21 @@ export const STRATEGIES: Strategy[] = [
         surface: "qr",
         title: "The physical-to-mobile handoff",
         detail:
-          "“Continue on your phone.” A signal leaves the guide and resolves into a QR/device outline. They scan — and the exact context they just built is already waiting on their screen. Nothing re-typed.",
+          "“Continue on your phone.” A signal leaves the guide and resolves into a QR/device outline. They scan, and the exact context they just built is already waiting on their screen. Nothing re-typed.",
       },
       {
         id: "support",
         surface: "mobile",
         title: "Builder support in-hand",
         detail:
-          "On mobile the guide becomes a focused companion: a suggested sponsor challenge, a workshop route on the venue map, a team-finding prompt, or a quick framework to unblock the idea — and it keeps answering.",
+          "On mobile the guide becomes a focused companion: a suggested sponsor challenge, a workshop route on the venue map, a team-finding prompt, or a quick framework to unblock the idea, and it keeps answering.",
       },
       {
         id: "return",
         surface: "followup",
         title: "Return moments",
         detail:
-          "Later, the same context resurfaces: a workshop reminder, a demo-practice nudge before judging, a showcase guide — each one visibly continuous with the guide they met on the floor.",
+          "Later, the same context resurfaces: a workshop reminder, a demo-practice nudge before judging, a showcase guide, each one visibly continuous with the guide they met on the floor.",
       },
       {
         id: "flywheel",
@@ -101,13 +101,13 @@ export const STRATEGIES: Strategy[] = [
         id: "organizer",
         title: "Organizers get a better event",
         detail:
-          "The guide absorbs the repetitive questions — where, when, which track, how do I — and routes attendees to the right room and the right people, lifting the floor experience without adding staff.",
+          "The guide absorbs the repetitive questions (where, when, which track, how do I) and routes attendees to the right room and the right people, lifting the floor experience without adding staff.",
       },
       {
         id: "sponsors",
         title: "Sponsors get discovered on purpose",
         detail:
-          "Instead of a table people walk past, sponsor tracks are surfaced to builders whose stated intent actually matches — a warmer, opt-in path to the teams they came to meet.",
+          "Instead of a table people walk past, sponsor tracks are surfaced to builders whose stated intent actually matches: a warmer, opt-in path to the teams they came to meet.",
       },
       {
         id: "livex",
@@ -133,7 +133,7 @@ export const STRATEGIES: Strategy[] = [
         label: "03",
         title: "Instrument every surface",
         detail:
-          "Measure engagement, hand-off, completion, sponsor actions, opt-in, and return sessions — so the story after the event is evidence, not vibes.",
+          "Measure engagement, hand-off, completion, sponsor actions, opt-in, and return sessions, so the story after the event is evidence, not vibes.",
       },
       {
         label: "04",
@@ -145,16 +145,16 @@ export const STRATEGIES: Strategy[] = [
         label: "05",
         title: "Debrief into a repeatable pattern",
         detail:
-          "Package what worked into a template other campus events — and eventually commercial venues — can reuse.",
+          "Package what worked into a template other campus events, and eventually commercial venues, can reuse.",
       },
     ],
     gtmMotion:
-      "Community-led, event-anchored. A single flagship activation seeds opt-in builder relationships and produces reusable proof that this physical-to-digital motion works — feeding both the campus program and the commercial field motion.",
+      "Community-led, event-anchored. A single flagship activation seeds opt-in builder relationships and produces reusable proof that this physical-to-digital motion works, feeding both the campus program and the commercial field motion.",
     successSignals: [
       {
         signal: "Physical engagement rate",
         reads:
-          "Of attendees who pass the guide, how many actually start an interaction — the honest read on whether the physical presence earns attention.",
+          "Of attendees who pass the guide, how many actually start an interaction. The honest read on whether the physical presence earns attention.",
       },
       {
         signal: "Scan-to-mobile handoff rate",
@@ -169,17 +169,17 @@ export const STRATEGIES: Strategy[] = [
       {
         signal: "Sponsor discovery actions",
         reads:
-          "Intent-matched sponsor track views or saves — the value the guide creates for partners.",
+          "Intent-matched sponsor track views or saves: the value the guide creates for partners.",
       },
       {
         signal: "Opt-in rate",
         reads:
-          "How many choose to keep the relationship going — the quality signal that separates this from a badge scan.",
+          "How many choose to keep the relationship going. The quality signal that separates this from a badge scan.",
       },
       {
         signal: "Return-session rate",
         reads:
-          "How many re-open a follow-up moment after the event — the flywheel actually turning.",
+          "How many re-open a follow-up moment after the event. The flywheel actually turning.",
       },
       {
         signal: "Follow-up demo / pilot conversations",
@@ -196,7 +196,7 @@ export const STRATEGIES: Strategy[] = [
       {
         risk: "The hand-off feels like a gimmick if context is thin.",
         mitigation:
-          "Make the mobile surface deliver something the room could not — a specific route, match, or framework — so continuity is felt, not claimed.",
+          "Make the mobile surface deliver something the room could not, a specific route, match, or framework, so continuity is felt, not claimed.",
       },
       {
         risk: "Event partnership, placement, and privacy approvals.",
@@ -226,7 +226,7 @@ export const STRATEGIES: Strategy[] = [
 ];
 
 // ------------------------------------------------------------------
-// Selectors — the only surface layout code touches.
+// Selectors - the only surface layout code touches.
 // ------------------------------------------------------------------
 
 export function getStrategiesByWorld(world: World): Strategy[] {

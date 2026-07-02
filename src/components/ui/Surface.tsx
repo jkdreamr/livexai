@@ -2,7 +2,7 @@ import { cn } from "@/lib/cn";
 import { SURFACES, type SurfaceKey } from "@/data/types";
 
 /**
- * Custom geometric surface icons — drawn as primitives, never emoji or stock.
+ * Custom geometric surface icons, drawn as primitives, never emoji or stock.
  * 24×24 grid, 1.5 stroke, currentColor, so they inherit ink/world accents.
  */
 export function SurfaceGlyph({
@@ -38,7 +38,7 @@ export function SurfaceGlyph({
         </svg>
       );
     case "qr":
-      // Scan frame — the bridge moment.
+      // Scan frame - the bridge moment.
       return (
         <svg {...common}>
           <path d="M5 8.5V5h3.5" />
@@ -73,7 +73,7 @@ export function SurfaceGlyph({
         </svg>
       );
     case "followup":
-      // A return arrow — memory reappearing.
+      // A return arrow - memory reappearing.
       return (
         <svg {...common}>
           <path d="M20 11a8 8 0 1 1-2.3-5.7L20 7.6" />

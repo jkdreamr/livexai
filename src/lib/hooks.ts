@@ -37,7 +37,7 @@ export function useIsMobile(): boolean {
   return useMediaQuery("(max-width: 820px)");
 }
 
-/** Coarse pointer (touch) — used to drop pointer-parallax affordances. */
+/** Coarse pointer (touch) - used to drop pointer-parallax affordances. */
 export function useIsCoarsePointer(): boolean {
   return useMediaQuery("(pointer: coarse)");
 }

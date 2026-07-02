@@ -1,9 +1,9 @@
 /**
- * Surface Map — strategy schema.
+ * Surface Map - strategy schema.
  *
  * This file defines the *shape* of the strategy universe. Content lives in
  * `strategies.ts`. Keeping the schema here means new ideas can be added
- * without touching layout logic — every world map and detail page reads
+ * without touching layout logic. Every world map and detail page reads
  * from these types.
  */
 
@@ -47,14 +47,14 @@ export interface JourneyStep {
 
 /** A phase in the activation plan / operating model. */
 export interface ActivationPhase {
-  label: string; // "01", "Week 0–2", etc.
+  label: string; // "01", "Week 0-2", etc.
   title: string;
   detail: string;
 }
 
 /**
  * A measurement hypothesis. We name the signal and what a healthy read would
- * *indicate* — never a fabricated number.
+ * *indicate*, never a fabricated number.
  */
 export interface SuccessSignal {
   signal: string;
@@ -93,7 +93,7 @@ export interface LensTags {
 
 /**
  * Optional event/partner brand for a concept. When present, the detail page
- * adopts the brand's palette (illustrative only — an original stylized mark,
+ * adopts the brand's palette (illustrative only, an original stylized mark,
  * never a reproduction of a trademark, and never implying affiliation).
  */
 export interface StrategyBrand {
@@ -113,7 +113,7 @@ export interface Strategy {
   strategicQuestion: string;
   targetAudience: string;
   partnerType: string;
-  /** Illustrative target archetype — never a claimed, signed relationship. */
+  /** Illustrative target archetype, never a claimed, signed relationship. */
   proposedPartner: string;
   primarySurface: SurfaceKey;
   connectedSurfaces: SurfaceKey[];
@@ -163,7 +163,7 @@ export const SURFACES: Record<SurfaceKey, SurfaceMeta> = {
     label: "Physical encounter",
     short: "Physical",
     description:
-      "A LiveX agent in real space — a stylized display, kiosk, or holographic guide someone walks up to.",
+      "A LiveX agent in real space: a stylized display, kiosk, or holographic guide someone walks up to.",
   },
   qr: {
     key: "qr",
@@ -177,7 +177,7 @@ export const SURFACES: Record<SurfaceKey, SurfaceMeta> = {
     label: "Mobile",
     short: "Mobile",
     description:
-      "A focused LiveX experience continuing on the attendee's phone — intent preserved, nothing re-typed.",
+      "A focused LiveX experience continuing on the attendee's phone, intent preserved, nothing re-typed.",
   },
   web: {
     key: "web",
@@ -191,7 +191,7 @@ export const SURFACES: Record<SurfaceKey, SurfaceMeta> = {
     label: "Voice",
     short: "Voice",
     description:
-      "Spoken interaction — hands-free intent capture that survives loud, live environments.",
+      "Spoken interaction: hands-free intent capture that survives loud, live environments.",
   },
   followup: {
     key: "followup",
@@ -218,7 +218,7 @@ export const WORLDS: Record<World, WorldMeta> = {
     thesis:
       "Reach ambitious student builders where they already gather, then grow campus experiments into broader pilots.",
     longThesis:
-      "The College world treats high-signal campus ecosystems as a living network. A LiveX interaction meets student builders at hackathons, labs, and founder communities, then travels with them — from a physical moment into an ongoing digital relationship, and from a single event into a repeatable program.",
+      "The College world treats high-signal campus ecosystems as a living network. A LiveX interaction meets student builders at hackathons, labs, and founder communities, then travels with them: from a physical moment into an ongoing digital relationship, and from a single event into a repeatable program.",
     temperament: ["Energetic", "Social", "Emerging", "Builder-led", "Kinetic"],
     signal: "college",
     href: "/college",

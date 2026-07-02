@@ -1,5 +1,5 @@
 "use client";
-// Vendored from React Bits (TextPressure) — external font import made optional
+// Vendored from React Bits (TextPressure) - external font import made optional
 // so we can drive it with our own variable font (Hanken Grotesk, wght axis).
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 

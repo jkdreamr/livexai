@@ -30,7 +30,7 @@ export function StandardExploration() {
         />
 
         <h2 className="text-display fluid-h2 mt-6 max-w-2xl text-balance text-ink">
-          No concepts committed yet — the field is being mapped.
+          No concepts committed yet. The field is being mapped.
         </h2>
 
         <p className="body-measure mt-6 max-w-xl text-ink-dim">
@@ -40,7 +40,7 @@ export function StandardExploration() {
         {/* Effect-rich pairing: terminal session + illustrative directions */}
         <div className="mt-16 grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-start">
           <Terminal
-            title="livex — standard · field"
+            title="livex · standard · field"
             typingSpeed={38}
             delayBetweenCommands={1100}
             commands={[
@@ -64,7 +64,7 @@ export function StandardExploration() {
 
           <div className="panel-inset p-6 sm:p-7">
             <p className="label-tight text-ink-faint">
-              Illustrative directions — not concepts
+              Illustrative directions, not concepts
             </p>
             <div className="text-display mt-5 min-h-[3.2em] text-2xl leading-snug text-ink sm:text-[1.7rem]">
               <Typewriter
@@ -82,7 +82,7 @@ export function StandardExploration() {
             </div>
             <p className="mt-6 text-sm leading-relaxed text-ink-dim">
               These are directions under exploration, not committed work. Nothing
-              here implies a signed partnership — each would have to earn its place
+              here implies a signed partnership. Each would have to earn its place
               on this map.
             </p>
           </div>
@@ -96,7 +96,7 @@ export function StandardExploration() {
           </p>
           <Link
             href="/college"
-            aria-label="See a world with a published concept — College"
+            aria-label="See a world with a published concept · College"
             className="cursor-target group inline-flex items-center gap-2 self-start text-standard sm:self-auto"
           >
             <span className="label-tight text-ink-soft transition-colors group-hover:text-ink">

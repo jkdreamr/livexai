@@ -13,7 +13,7 @@ export function Terminal({
   outputs = {},
   typingSpeed = 42,
   delayBetweenCommands = 1000,
-  title = "livex — surface-map",
+  title = "livex · surface-map",
   className,
 }: {
   commands: string[];

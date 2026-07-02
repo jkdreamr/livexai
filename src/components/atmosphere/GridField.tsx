@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useMounted, useReducedMotion } from "@/lib/hooks";
 
 /**
- * Standard background — an architectural amber grid with a slow drifting light
+ * Standard background - an architectural amber grid with a slow drifting light
  * and a receding horizon line. Structured and still, distinct from College's
  * flowing aurora and the landing's liquid metal. Static under reduced motion.
  */

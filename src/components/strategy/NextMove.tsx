@@ -1,7 +1,7 @@
 import type { NextStep } from "@/data/types";
 import { accentClasses, type Accent } from "./theme";
 
-/** The recommended next move — a decisive closing statement, not a CTA. */
+/** The recommended next move - a decisive closing statement, not a CTA. */
 export function NextMove({
   next,
   accent,

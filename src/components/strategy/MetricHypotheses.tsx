@@ -4,7 +4,7 @@ import { accentClasses, type Accent } from "./theme";
 
 /**
  * Measurement hypotheses. We name the signal and what a healthy read would
- * *indicate* — never a fabricated number. The header makes that explicit.
+ * *indicate*, never a fabricated number. The header makes that explicit.
  */
 export function MetricHypotheses({
   signals,
@@ -18,7 +18,7 @@ export function MetricHypotheses({
     <div>
       <div className="flex items-center gap-3 rounded-full border border-line-strong bg-white/[0.02] px-4 py-2 text-ink-dim label-tight w-fit">
         <span className={`size-1.5 rounded-full ${a.dot}`} aria-hidden />
-        Signals to measure — hypotheses, not projected results
+        Signals to measure: hypotheses, not projected results
       </div>
 
       <ol className="mt-8 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">

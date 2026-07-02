@@ -11,7 +11,7 @@ const GhostCursor = dynamic(
   { ssr: false }
 );
 
-/** Original, stylized evergreen mark — an illustrative nod, not a reproduction
+/** Original, stylized evergreen mark - an illustrative nod, not a reproduction
  *  of any real event logo. */
 function TreeMark({ color }: { color: string }) {
   return (

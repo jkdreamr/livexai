@@ -13,10 +13,10 @@ const GhostCursor = dynamic(
 );
 
 /**
- * College world header — "Campus & Builder Motion".
+ * College world header - "Campus & Builder Motion".
  * Background is a flowing cyan aurora (distinct from the landing's liquid
- * metal). The name pairs "College" with a rotating noun — students / builders
- * / events / classes — plus a GhostCursor presence and a DecryptedText eyebrow.
+ * metal). The name pairs "College" with a rotating noun - students / builders
+ * / events / classes - plus a GhostCursor presence and a DecryptedText eyebrow.
  */
 export function CollegeHeader() {
   const reduced = useReducedMotion();

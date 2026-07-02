@@ -1,5 +1,5 @@
 "use client";
-// Vendored from React Bits (TargetCursor) — CSS moved to globals.
+// Vendored from React Bits (TargetCursor) - CSS moved to globals.
 import { useEffect, useRef, useCallback, useMemo } from "react";
 import { gsap } from "gsap";
 

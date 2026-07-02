@@ -123,7 +123,7 @@ export function SignalFlywheel({
         </div>
       </div>
 
-      {/* Legend — real, readable outcome labels */}
+      {/* Legend - real, readable outcome labels */}
       <ol className="flex flex-col">
         {nodes.map((node, i) => {
           const on = i === active;

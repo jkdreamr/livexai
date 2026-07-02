@@ -28,7 +28,7 @@ export function SiteHeader() {
         <Link
           href="/"
           className="cursor-target group flex items-baseline gap-2"
-          aria-label="LiveX — home"
+          aria-label="LiveX home"
         >
           <span className="font-display text-[1.35rem] leading-none tracking-tight text-ink transition-opacity group-hover:opacity-80">
             LiveX
