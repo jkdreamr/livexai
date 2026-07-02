@@ -6,11 +6,8 @@ import { useIsMobile, useMounted, useReducedMotion } from "@/lib/hooks";
 import DecryptedText from "@/components/reactbits/DecryptedText";
 import TextPressure from "@/components/reactbits/TextPressure";
 import GradualBlur from "@/components/reactbits/GradualBlur";
+import { GridField } from "@/components/atmosphere/GridField";
 
-const LiquidChrome = dynamic(
-  () => import("@/components/reactbits/LiquidChrome").then((m) => m.LiquidChrome),
-  { ssr: false }
-);
 const GhostCursor = dynamic(() => import("@/components/reactbits/GhostCursor"), {
   ssr: false,
 });
@@ -30,19 +27,8 @@ export function StandardHeader() {
 
   return (
     <header className="screen relative flex flex-col justify-center overflow-hidden">
-      {/* Restrained living shader — warm-dark, veiled */}
-      {showEffects && (
-        <div aria-hidden className="absolute inset-0 z-0 opacity-[0.4]">
-          <LiquidChrome
-            baseColor={[0.05, 0.038, 0.026]}
-            speed={0.22}
-            amplitude={0.26}
-            frequencyX={2.2}
-            frequencyY={1.6}
-            interactive={!isMobile}
-          />
-        </div>
-      )}
+      {/* Architectural amber grid — structured, still, distinct from College */}
+      <GridField />
 
       {/* Scoped glowing pointer presence — desktop only, restrained */}
       {showEffects && !isMobile && (
@@ -56,12 +42,6 @@ export function StandardHeader() {
           />
         </div>
       )}
-
-      {/* Veil the shader into the void so it stays quiet and architectural */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-[1] [background:radial-gradient(125%_100%_at_50%_42%,transparent_24%,rgba(9,8,7,0.74)_62%,var(--color-void))]"
-      />
 
       <div className="container-x pointer-events-none relative z-10">
         <DecryptedText

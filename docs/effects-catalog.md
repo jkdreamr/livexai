@@ -35,6 +35,15 @@ where each one is used. Add new ones to the bottom as we go.
 | 17 | **ExpandableCard** — cards that expand in place (Design Sync / Product / Weather) | 📥 | Note: we deliberately avoid "cards" for concepts; useful for a Docs FAQ or detail module. Deps: `@/components/ui/expandable`. |
 | 18 | **MetalButton** — liquid-metal ring button | 📥 | A signature CTA (e.g. landing "Enter", TreeHacks). Deps: `metal-fx` (WebGL) + a shadcn `Button`. |
 | 19 | **HeroColorPanels** — shader hero with animated color panels | 📥 | An alternate hero treatment. Deps: `@paper-design/shaders-react` (or similar) + a `@/components/ui/hero-color-panel` base. |
+| 20 | **RotatingText** (React Bits) — per-character rotating word | ✅ `src/components/reactbits/RotatingText.tsx` | College header: "College" + rotating students / builders / events / classes |
+
+## Backgrounds (per-page, so no two pages feel the same)
+
+| # | Background | Status | Used in |
+|---|-----------|--------|---------|
+| B1 | **LiquidChrome** — liquid-metal shader (`ogl`) | ✅ | Landing |
+| B2 | **AuroraBackground** — flowing cyan aurora (rotating conic + drifting glow, CSS/framer) | ✅ `src/components/atmosphere/AuroraBackground.tsx` | College header |
+| B3 | **GridField** — architectural amber grid + drifting light + horizon (CSS/framer) | ✅ `src/components/atmosphere/GridField.tsx` | Standard header |
 
 ---
 
