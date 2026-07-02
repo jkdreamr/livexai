@@ -85,7 +85,7 @@ export function StrategyHero({ strategy }: { strategy: Strategy }) {
           {...rise(6)}
           className="mt-8 max-w-xl text-sm leading-relaxed text-ink-dim"
         >
-          <span className="text-ink-soft">Primary surface — </span>
+          <span className="text-ink-soft">Primary surface: </span>
           {SURFACES[strategy.primarySurface].description}
         </motion.p>
       </div>

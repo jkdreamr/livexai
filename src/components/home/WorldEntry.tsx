@@ -119,7 +119,7 @@ function PathLink({
     <Link
       href={meta.href}
       onClick={onEnter}
-      aria-label={`Enter the ${meta.name} world — ${meta.subtitle}`}
+      aria-label={`Enter the ${meta.name} world · ${meta.subtitle}`}
       className="cursor-target group flex flex-col items-center gap-2 px-3 py-2 outline-none"
     >
       <span className="text-display text-2xl text-ink opacity-90 transition-opacity duration-300 group-hover:opacity-100 sm:text-3xl">

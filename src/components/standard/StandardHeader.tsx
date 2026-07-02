@@ -13,7 +13,7 @@ const GhostCursor = dynamic(() => import("@/components/reactbits/GhostCursor"), 
 });
 
 /**
- * Standard world header — architectural, high-conviction, still.
+ * Standard world header - architectural, high-conviction, still.
  * Layers a very-restrained dark LiquidChrome veil + a scoped GhostCursor
  * presence behind a DecryptedText eyebrow and the world name via TextPressure.
  * A GradualBlur dissolves the header into the page below.
@@ -27,10 +27,10 @@ export function StandardHeader() {
 
   return (
     <header className="screen relative flex flex-col justify-center overflow-hidden">
-      {/* Architectural amber grid — structured, still, distinct from College */}
+      {/* Architectural amber grid - structured, still, distinct from College */}
       <GridField />
 
-      {/* Scoped glowing pointer presence — desktop only, restrained */}
+      {/* Scoped glowing pointer presence - desktop only, restrained */}
       {showEffects && !isMobile && (
         <div aria-hidden className="absolute inset-0 z-0">
           <GhostCursor

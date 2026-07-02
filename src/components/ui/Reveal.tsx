@@ -9,7 +9,7 @@ import { ease } from "@/lib/motion";
  * Scroll-into-view reveal. Framer's JS animation is NOT caught by the global
  * reduced-motion CSS rule, so we gate it explicitly: reduced-motion (and
  * pre-hydration) render children static and visible. Used for below-the-fold
- * content only — heroes animate on their own timeline.
+ * content only - heroes animate on their own timeline.
  */
 export function Reveal({
   children,

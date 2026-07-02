@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useMounted, useReducedMotion } from "@/lib/hooks";
 
 /**
- * College background — a slow flowing aurora (rotating conic sweep + drifting
+ * College background - a slow flowing aurora (rotating conic sweep + drifting
  * glow), cyan-mint. Deliberately different from the landing's liquid metal.
  * Static under reduced motion.
  */

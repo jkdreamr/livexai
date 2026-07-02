@@ -10,7 +10,7 @@ import { SURFACES } from "@/data/types";
 
 /**
  * College currently holds one concept: TreeHacks, the flagship. Presented as a
- * single confident editorial feature — not a sparse list — that links to the
+ * single confident editorial feature, not a sparse list, that links to the
  * full strategy. Effects continue throughout: a DecryptedText micro-label, a
  * scroll reveal, and an AnimatedArrow that resolves on hover.
  */
@@ -56,7 +56,7 @@ export function FlagshipFeature({ strategy }: { strategy: Strategy }) {
           </p>
 
           <div className="relative mt-12 flex flex-wrap items-center gap-x-8 gap-y-6">
-            {/* Surface glyphs — the arc this concept travels */}
+            {/* Surface glyphs - the arc this concept travels */}
             <ul
               aria-label="Surfaces this concept spans"
               className="flex items-center gap-5 text-ink-dim transition-colors duration-500 group-hover:text-college"

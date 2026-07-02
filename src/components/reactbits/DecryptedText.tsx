@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable */
-// Vendored from React Bits (DecryptedText) — motion/react → framer-motion.
+// Vendored from React Bits (DecryptedText) - motion/react → framer-motion.
 import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 

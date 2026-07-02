@@ -7,7 +7,7 @@ import { cn } from "@/lib/cn";
 import { useReducedMotion } from "@/lib/hooks";
 
 /**
- * KitKeyboard — a compact interactive keyboard. Keycaps depress on click and
+ * KitKeyboard - a compact interactive keyboard. Keycaps depress on click and
  * when the matching physical key is pressed. Optional subtle WebAudio click,
  * default muted, never plays under reduced motion.
  */
@@ -51,7 +51,7 @@ export default function KitKeyboard() {
       osc.start(now);
       osc.stop(now + 0.08);
     } catch {
-      /* audio not available — silent */
+      /* audio not available - silent */
     }
   }, [muted, reduced]);
 

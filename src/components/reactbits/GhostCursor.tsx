@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable */
-// Vendored from React Bits (GhostCursor) — CSS moved to globals. Container-scoped
+// Vendored from React Bits (GhostCursor) - CSS moved to globals. Container-scoped
 // glowing pointer trail (three + postprocessing). Renders within its parent.
 import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";

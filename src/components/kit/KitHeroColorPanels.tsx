@@ -6,7 +6,7 @@ import { cn } from "@/lib/cn";
 import { useReducedMotion, useMounted } from "@/lib/hooks";
 
 /**
- * KitHeroColorPanels — a compact editorial hero panel whose backdrop is an
+ * KitHeroColorPanels - a compact editorial hero panel whose backdrop is an
  * animated mesh-gradient shader (paper-design), veiled behind a dark scrim so
  * the heading stays crisp. Reduced-motion → static gradient, no WebGL loop.
  */
@@ -69,7 +69,7 @@ export default function KitHeroColorPanels() {
             Map the surfaces where demand actually lives.
           </h2>
           <p className="max-w-md text-sm leading-relaxed text-ink-soft">
-            LiveX renders every touchpoint as a navigable field — so strategy
+            LiveX renders every touchpoint as a navigable field, so strategy
             reads like terrain, not a slide.
           </p>
           <div className="pt-1">

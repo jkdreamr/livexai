@@ -12,12 +12,12 @@ import { accentClasses, type Accent } from "./theme";
 
 /**
  * The core LiveX moment: context leaves a physical presence, resolves into a
- * QR, and re-materialises inside a phone — without losing the selected intent.
+ * QR, and re-materialises inside a phone - without losing the selected intent.
  * Driven by one looping clock (0→1) so every element stays in sync. Under
  * reduced motion it renders the *arrived* end-state statically.
  */
 function MiniQR({ color }: { color: string }) {
-  // A legible QR-like module pattern (not a real code — illustrative).
+  // A legible QR-like module pattern (not a real code - illustrative).
   const cells = [
     [0, 0], [1, 0], [2, 0], [4, 0], [5, 0], [6, 0],
     [0, 1], [2, 1], [4, 1], [6, 1],

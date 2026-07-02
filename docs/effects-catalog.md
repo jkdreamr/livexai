@@ -26,18 +26,15 @@ where each one is used. Add new ones to the bottom as we go.
 | 8 | **AnimatedArrow** (Skiper99 arrow) — chevron grows into an arrow on hover | ✅ `src/components/skiper/AnimatedArrow.tsx` | College flagship feature · Standard · RelatedStrategies · TreeHacks "case" link |
 | 9 | **Typewriter** — types through strings | ✅ `src/components/skiper/Typewriter.tsx` | TreeHacks mobile handoff message · Standard exploration |
 | 10 | **Terminal** — mac-window typing terminal | ✅ `src/components/skiper/Terminal.tsx` | Docs ("add a strategy") · Standard exploration ("field open") |
-| 11 | **Animated icons** (Skiper99) — hamburger-morph + volume-mute + arrow | ✅ `src/components/kit/KitAnimatedIcons.tsx` | Docs → Interaction kit |
-| 12 | **VideoReveal** (Skiper67) — clip-path expand from a thumbnail w/ tracking "Play" label | ✅ `src/components/kit/KitVideoReveal.tsx` | Docs → Interaction kit (reveals a shader loop; no external video needed) |
-| 13 | **Keyboard** — interactive keycaps (real keydown + optional muted click) | ✅ `src/components/kit/KitKeyboard.tsx` | Docs → Interaction kit |
-| 14 | **Dock** — macOS-style magnifying dock | ✅ `src/components/chrome/DockNav.tsx` + `kit/KitDockDemo.tsx` | **Site nav** + Docs → Interaction kit |
-| 15 | **FloatingPanel** — trigger morphs open into a note panel | ✅ `src/components/kit/KitFloatingPanel.tsx` | Docs → Interaction kit |
-| 16 | **MorphSurface** — collapsed pill morphs into an input | ✅ `src/components/kit/KitMorphSurface.tsx` | Docs → Interaction kit |
-| 17 | **ExpandableCard** — card expands in place with staggered reveal | ✅ `src/components/kit/KitExpandable.tsx` | Docs → Interaction kit (themed to a LiveX handoff) |
-| 18 | **MetalButton** — liquid-metal ring button (`metal-fx`) | ✅ `src/components/kit/KitMetalButton.tsx` | Docs → Interaction kit |
-| 19 | **HeroColorPanels** — shader hero (`@paper-design/shaders-react` MeshGradient) | ✅ `src/components/kit/KitHeroColorPanels.tsx` | Docs → Interaction kit (LiveX blues) |
-| 20 | **RotatingText** (React Bits) — per-character rotating word | ✅ `src/components/reactbits/RotatingText.tsx` | College header: "College" + rotating students / builders / events / classes |
+| 11 | **Expand / collapse in place** (ExpandableCard pattern) | ✅ | TreeHacks demo: sponsor rows expand to tracks + prizes. Kit source: `kit/KitExpandable.tsx` |
+| 12 | **Dock** — macOS-style magnifying dock | ✅ `src/components/chrome/DockNav.tsx` | **Site nav** |
+| 13 | **Chat typing + thinking dots** | ✅ | TreeHacks demo chatbot (Chatbot.tsx), replies typed via Typewriter |
+| 14 | **RotatingText** (React Bits) | ✅ `src/components/reactbits/RotatingText.tsx` | College header: "College" + rotating students / builders / events / classes |
+| 15 | **HoloMap** — tilted holographic floor plan with an animated route | ✅ `src/components/treehacks/HoloMap.tsx` | TreeHacks demo → Events (directions) |
+| 16 | **HoloAgent** — projected holographic guide that reacts + tilts | ✅ `src/components/treehacks/HoloAgent.tsx` | TreeHacks demo (the agent) |
 
-> Every Batch-2 effect is now live. Most are showcased in the **Docs → Interaction kit** gallery; the magnifying **Dock** doubles as the site nav.
+### Built and available to slot in (not currently placed)
+The interaction-kit gallery was removed (a gallery is not integration). These stay in `src/components/kit/` ready to drop into a real spot on request: **Keyboard**, **VideoReveal** (clip-path, no video asset yet), **FloatingPanel**, **MorphSurface**, **MetalButton** (`metal-fx`), **HeroColorPanels** (`@paper-design/shaders-react`), **AnimatedIcons** (hamburger / volume / arrow).
 
 ## Backgrounds (per-page, so no two pages feel the same)
 

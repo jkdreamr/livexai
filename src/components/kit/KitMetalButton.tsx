@@ -6,7 +6,7 @@ import { cn } from "@/lib/cn";
 import { useReducedMotion, useMounted } from "@/lib/hooks";
 
 /**
- * KitMetalButton — liquid-metal buttons wrapped with metal-fx's animated
+ * KitMetalButton - liquid-metal buttons wrapped with metal-fx's animated
  * chromatic ring. Dark-themed. Reduced-motion pauses the shader (one static
  * frame stays painted). If metal-fx fails to mount cleanly it still degrades
  * to a solid dark pill because our own styling lives on the child element.

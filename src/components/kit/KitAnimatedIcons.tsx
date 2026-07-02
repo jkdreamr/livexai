@@ -6,7 +6,7 @@ import { cn } from "@/lib/cn";
 import { useReducedMotion } from "@/lib/hooks";
 
 /**
- * KitAnimatedIcons — three dark icon tiles with micro-interactions:
+ * KitAnimatedIcons - three dark icon tiles with micro-interactions:
  *  (a) arrow that grows / nudges on hover
  *  (b) hamburger that morphs into an X on click
  *  (c) volume icon that toggles mute (slash animates in + shakes)
@@ -51,7 +51,7 @@ export default function KitAnimatedIcons() {
   return (
     <div className="flex w-full max-w-md flex-col items-center gap-5">
       <div className="flex items-center gap-4">
-        {/* (a) Arrow — grows / nudges on hover */}
+        {/* (a) Arrow - grows / nudges on hover */}
         <Tile label="hover">
           <svg viewBox="0 0 24 24" fill="none" className="h-full w-full">
             <motion.g

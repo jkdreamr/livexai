@@ -7,7 +7,7 @@ import { cn } from "@/lib/cn";
 import { useReducedMotion } from "@/lib/hooks";
 
 /**
- * KitExpandable — one dark card (cult-ui "Expandable" style). Expands on hover
+ * KitExpandable - one dark card (cult-ui "Expandable" style). Expands on hover
  * or click to reveal detail rows with a staggered blur-in and a small CTA.
  * Themed to a LiveX "Physical → Mobile handoff" surface.
  */

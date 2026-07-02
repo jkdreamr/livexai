@@ -1,312 +1,378 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { WORLDS, SURFACES } from "@/data/types";
-import type { SurfaceKey, World } from "@/data/types";
-import {
-  STRATEGIES,
-  getStrategiesByWorld,
-  getStrategyBySlug,
-} from "@/data/strategies";
-import { Reveal } from "@/components/ui/Reveal";
-import { Section } from "@/components/strategy/Section";
-import { SurfaceGlyph } from "@/components/ui/Surface";
-import { MetricHypotheses } from "@/components/strategy/MetricHypotheses";
-import { accentClasses } from "@/components/strategy/theme";
+import { DocsShell } from "@/components/docs/DocsShell";
+import { DocsSection } from "@/components/docs/DocsSection";
 import { DocsEyebrow } from "@/components/docs/DocsEyebrow";
-import { InteractionKit } from "@/components/docs/InteractionKit";
-import { Terminal } from "@/components/skiper/Terminal";
-
-const treehacks = getStrategyBySlug("treehacks-builder-guide")!;
 
 export const metadata: Metadata = {
-  title: "Docs — the thinking behind the map",
+  title: "Docs · the thinking behind the map",
   description:
-    "The product thesis, the two GTM motions, the surface model, and how a LiveX interaction is structured across the Surface Map.",
+    "An internal document. How the demo works, why TreeHacks is the first College bet, illustrative sponsorship directions, and what we would measure.",
 };
 
-const SURFACE_ORDER: SurfaceKey[] = [
-  "physical",
-  "qr",
-  "mobile",
-  "web",
-  "voice",
-  "followup",
-  "partner",
+/* Illustrative sponsorship prize directions. Nothing here is signed or priced. */
+const PRIZE_DIRECTIONS = [
+  {
+    title: "Best use of a live agent",
+    detail:
+      "A track prize for the team that puts a LiveX-style agent to the sharpest use inside their own build. Rewards real integration, not a logo on a slide.",
+  },
+  {
+    title: "Best physical-to-digital moment",
+    detail:
+      "For the project that carries context across a real handoff: a scan, a room, a device. It maps to the exact thing the demo is showing on the floor.",
+  },
+  {
+    title: "Continuity prize",
+    detail:
+      "For a build that still does something useful after the event ends. It rewards the memory idea instead of a one-off demo.",
+  },
 ];
 
-const SCHEMA = [
-  { field: "world", note: "Which GTM motion it belongs to — college or standard." },
-  { field: "status", note: "Readiness, shown verbatim: Concept, Exploration, Pilot hypothesis, Concept activation." },
-  { field: "oneLineThesis", note: "The felt promise, in a sentence." },
-  { field: "strategicQuestion", note: "The single question the concept is a bet on." },
-  { field: "primary / connectedSurfaces", note: "Where the one intelligence appears, and how it travels." },
-  { field: "user / partnerJourney", note: "What the attendee experiences; what the partner gains." },
-  { field: "activationPlan", note: "How it gets built — a short operating sequence." },
-  { field: "successSignals", note: "Measurement hypotheses. Signals to watch, never fabricated numbers." },
-  { field: "nextStep", note: "The recommended next move, with a time horizon." },
+const PARTNER_VALUE = [
+  {
+    title: "Organizers get a lighter floor",
+    detail:
+      "The guide answers the repeated questions (where, when, which track, how do I start) and points people to the right room. That is help the organizing team does not have to staff.",
+  },
+  {
+    title: "Sponsors get found on purpose",
+    detail:
+      "Sponsor tracks surface to builders whose stated intent actually matches, so the people who walk up already care. That is a warmer path than a table people pass by.",
+  },
+  {
+    title: "LiveX gets proof in the room",
+    detail:
+      "We show a physical-to-digital handoff to the exact audience we want, and we leave with opt-in relationships instead of badge scans.",
+  },
+];
+
+const SIGNALS = [
+  {
+    signal: "Physical engagement rate",
+    reads:
+      "Of the people who pass the guide, how many start an interaction. The honest read on whether the physical presence earns attention.",
+  },
+  {
+    signal: "Handoff rate",
+    reads:
+      "Of those who engage, how many carry it to their phone. This is the core proof that the handoff, with context, works.",
+  },
+  {
+    signal: "Completion rate",
+    reads:
+      "How many reach a useful outcome, like a team lead, a route, or an unblocked idea, instead of bouncing.",
+  },
+  {
+    signal: "Sponsor discovery actions",
+    reads:
+      "Intent-matched sponsor track views or saves. The value the guide creates for partners.",
+  },
+  {
+    signal: "Opt-in rate",
+    reads:
+      "How many choose to keep the relationship going. The quality signal that separates this from a scan.",
+  },
+  {
+    signal: "Return-session rate",
+    reads:
+      "How many re-open a follow-up moment after the event. The flywheel actually turning.",
+  },
+];
+
+const RISKS = [
+  {
+    risk: "A loud, crowded room degrades voice and attention.",
+    mitigation:
+      "Design tap-first with voice as an accelerant. Keep the opening ask to one question that works in about three seconds.",
+  },
+  {
+    risk: "The handoff feels like a gimmick if the context is thin.",
+    mitigation:
+      "Make the mobile surface deliver something the room could not: a specific route, a match, or a framework. Continuity has to be felt, not claimed.",
+  },
+  {
+    risk: "Partnership, placement, and privacy approvals.",
+    mitigation:
+      "Treat opt-in, data handling, and on-site placement as day-one constraints, agreed with organizers before we build.",
+  },
+  {
+    risk: "Hardware and connectivity on a crowded venue network.",
+    mitigation:
+      "Degrade gracefully. The guide and handoff have to survive flaky Wi-Fi and fall back to a lightweight mobile path.",
+  },
+];
+
+/* The three actions a builder can take on the mobile guide, plus the chatbot. */
+const BUILDER_ACTIONS = [
+  {
+    tag: "Check in",
+    detail:
+      "The builder tells the guide what they are here to do: find a team, pick a track, get unstuck. The agent reflects it back and sets up everything after.",
+  },
+  {
+    tag: "Sponsors",
+    detail:
+      "The guide surfaces sponsor tracks that match the stated intent, so a builder sees the challenges worth their time instead of a wall of tables.",
+  },
+  {
+    tag: "Events",
+    detail:
+      "Workshops, deadlines, and demo windows laid out as a route through the day, with reminders that reappear when they matter.",
+  },
 ];
 
 export default function DocsPage() {
   return (
     <article>
       {/* Hero */}
-      <header className="container-x flex min-h-[62vh] flex-col justify-center pt-24">
-        <Reveal>
-          <DocsEyebrow />
-          <h1 className="text-display fluid-hero mt-6 max-w-3xl">Docs</h1>
-          <p className="body-measure fluid-lead mt-8 max-w-2xl text-ink-soft">
-            The thinking behind the Surface Map — the thesis, the two motions,
-            and how a single LiveX interaction is structured so it can travel
-            across physical space, mobile, web, voice, and everything after.
-          </p>
-        </Reveal>
+      <header className="container-x pt-24">
+        <DocsEyebrow />
+        <h1 className="text-display fluid-hero mt-6 max-w-3xl">Docs</h1>
+        <p className="body-measure fluid-lead mt-8 max-w-2xl text-ink-soft">
+          An internal working document. It holds the reasoning behind the first
+          College bet, how the live demo is put together, and the illustrative
+          directions we would take a sponsorship. Read it top to bottom, or jump
+          around with the outline on the left.
+        </p>
       </header>
 
-      {/* Thesis */}
-      <Section index="01" label="Thesis">
-        <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr]">
-          <Reveal>
-            <p className="text-display fluid-h2 text-balance">
-              One LiveX intelligence can appear across many surfaces — and carry
-              its context between them.
+      <DocsShell>
+        {/* Intro: how these docs work */}
+        <div className="mb-16 border-b border-line pb-14">
+          <p className="label mb-4 text-brand">How these docs work</p>
+          <div className="body-measure flex flex-col gap-4 text-ink-soft">
+            <p>
+              The outline on the left is the whole document. It is grouped by the
+              two go-to-market worlds. College holds the work that is furthest
+              along, which is the TreeHacks concept. Standard holds partners we
+              are still only thinking about. Open a branch to see its sections,
+              click a section to jump to it, and the outline tracks where you are
+              as you scroll.
             </p>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="body-measure text-ink-soft">
-              The map exists to make one idea concrete: a physical encounter, a
-              QR handoff, a phone, a voice, a follow-up weeks later — the same
-              intelligence, remembering who you are. Every concept here is an
-              internal hypothesis, held to four questions: who encounters it,
-              what it feels like, why the partner cares, and what signal LiveX
-              gains.
+            <p>
+              Everything below is a hypothesis. The prizes and the case for
+              sponsoring are illustrative directions, written to show the shape
+              of a deal, not to claim one. There are no real figures and no real
+              logos. Where a term or a point of contact belongs, it is left as a
+              placeholder for the team to fill in.
             </p>
-          </Reveal>
+          </div>
         </div>
-      </Section>
 
-      {/* Two motions */}
-      <Section index="02" label="Two motions">
-        <div className="grid gap-px overflow-hidden rounded-lg border border-line bg-line md:grid-cols-2">
-          {(Object.keys(WORLDS) as World[]).map((key) => {
-            const w = WORLDS[key];
-            const a = accentClasses(w.signal);
-            return (
-              <Reveal key={key}>
-                <Link
-                  href={w.href}
-                  className="cursor-target group flex h-full flex-col gap-4 bg-void p-8 transition-colors hover:bg-white/[0.02]"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <span className={`size-1.5 rounded-full ${a.dot}`} />
-                    <span className={`label-tight ${a.text}`}>{w.subtitle}</span>
-                  </div>
-                  <h3 className="font-display text-3xl text-ink">{w.name}</h3>
-                  <p className="body-measure text-sm text-ink-soft">{w.longThesis}</p>
-                  <span className="mt-auto inline-flex items-center gap-2 pt-2 label-tight text-ink-dim transition-colors group-hover:text-ink">
-                    Enter <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
-                  </span>
-                </Link>
-              </Reveal>
-            );
-          })}
-        </div>
-      </Section>
+        <div className="flex flex-col gap-12">
+          {/* ==================== COLLEGE · TREEHACKS ==================== */}
+          <DocsSection
+            id="why-treehacks"
+            eyebrow="College · TreeHacks"
+            title="Why TreeHacks"
+            accent="college"
+          >
+            <div className="body-measure flex flex-col gap-4 text-ink-soft">
+              <p>
+                A hackathon is the densest room of technical builders LiveX will
+                stand in front of. Future founders, future customers, future
+                hires, all in one place and all willing to try a new tool on the
+                spot. That makes it a rare setting where a physical-to-digital
+                demo is also the product doing its real job.
+              </p>
+              <p>
+                It runs the other way too. TreeHacks gets a guide that absorbs
+                the repeated questions and points people to the right room,
+                which lifts the floor without adding staff. The fit is that the
+                thing we want to show off is the same thing the event actually
+                needs.
+              </p>
+              <p>
+                What we would bring is not a face at a kiosk. Plenty of vendors
+                can render a face. The point is continuity: an agent that
+                captures intent in the room and carries it, intact, onto the
+                builder&rsquo;s phone and into the days after. A booth or a plain
+                chatbot cannot do that.
+              </p>
+            </div>
+          </DocsSection>
 
-      {/* Surfaces */}
-      <Section
-        index="03"
-        label="The surfaces"
-        title="Where one intelligence can appear"
-      >
-        <ul className="grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-          {SURFACE_ORDER.map((key, i) => {
-            const s = SURFACES[key];
-            return (
-              <Reveal key={key} delay={(i % 3) * 0.05}>
-                <li className="flex h-full flex-col gap-3 bg-void p-6">
-                  <span className="grid size-10 place-items-center rounded-full border border-line-strong text-ink-soft">
-                    <SurfaceGlyph surface={key} size={18} />
-                  </span>
-                  <h3 className="font-display text-lg text-ink">{s.label}</h3>
-                  <p className="text-sm leading-relaxed text-ink-dim">{s.description}</p>
-                </li>
-              </Reveal>
-            );
-          })}
-        </ul>
-      </Section>
+          <DocsSection
+            id="how-the-demo-works"
+            eyebrow="College · TreeHacks"
+            title="How the demo works"
+            accent="college"
+          >
+            <div className="body-measure flex flex-col gap-4 text-ink-soft">
+              <p>
+                The demo is an interactive Builder Guide. At its center is one
+                agent that greets a builder on the floor, captures what they are
+                there to do, and hands that context to their phone with a scan.
+                Nothing gets re-typed. On mobile, the same agent gives the
+                builder three things to do and answers questions along the way.
+              </p>
+            </div>
 
-      {/* Schema */}
-      <Section
-        index="04"
-        label="How a concept is structured"
-        title="One schema, many ideas"
-        intro="Every concept is one object in src/data/strategies.ts. Add a new idea there and it gets a world node, a detail page, and cross-links — no layout code changes."
-      >
-        <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] lg:items-start">
-          <dl className="grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
-            {SCHEMA.map((row, i) => (
-              <Reveal key={row.field} delay={(i % 2) * 0.05}>
-                <div className="flex h-full flex-col gap-2 bg-void p-6">
-                  <dt className="font-mono text-sm text-ink">{row.field}</dt>
-                  <dd className="text-sm leading-relaxed text-ink-dim">{row.note}</dd>
+            <div className="mt-8 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
+              {BUILDER_ACTIONS.map((a) => (
+                <div key={a.tag} className="flex flex-col gap-2 bg-void p-5">
+                  <span className="label-tight text-college">{a.tag}</span>
+                  <p className="text-sm leading-relaxed text-ink-dim">
+                    {a.detail}
+                  </p>
                 </div>
-              </Reveal>
-            ))}
-          </dl>
-          <Reveal delay={0.1}>
-            <Terminal
-              commands={[
-                "open src/data/strategies.ts",
-                "append one { Strategy }",
-                "npm run build",
-              ]}
-              outputs={{
-                1: [
-                  "→ node added to its world",
-                  "→ /strategy/[slug] generated",
-                  "→ related links wired",
-                ],
-                2: ["✓ compiled", "✓ concepts prerendered · static"],
-              }}
-            />
-          </Reveal>
-        </div>
-      </Section>
+              ))}
+            </div>
 
-      {/* The bar */}
-      <Section index="05" label="The quality bar">
-        <Reveal>
-          <p className="text-display fluid-h3 max-w-4xl text-balance text-ink-soft">
-            <Link href="/strategy/treehacks-builder-guide" className="cursor-target text-college underline-offset-4 hover:underline">
-              TreeHacks
-            </Link>{" "}
-            sets the bar: an interactive, physical-to-mobile concept where the
-            agent remembers context across surfaces. Every future concept should
-            aim for that level of clarity and craft.
-          </p>
-        </Reveal>
-      </Section>
+            <div className="mt-6 rounded-lg border border-line bg-charcoal p-5">
+              <span className="label-tight text-college">Chatbot</span>
+              <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                Underneath the three actions, the guide is a chatbot the builder
+                can ask anything: where a workshop is, how a track works, what to
+                do next. It keeps the context it already has, so answers stay
+                specific to that builder&rsquo;s day.
+              </p>
+            </div>
+          </DocsSection>
 
-      {/* TreeHacks — the case */}
-      <div id="treehacks" className="scroll-mt-24" />
-      <Section
-        index="06"
-        label="TreeHacks · the case"
-        accent="college"
-        title="Why this one, first"
-        intro={treehacks.whyLiveX}
-      >
-        <div className="grid gap-12 lg:grid-cols-2">
-          <Reveal>
+          <DocsSection
+            id="sponsorship-prizes"
+            eyebrow="College · TreeHacks"
+            title="Possible sponsorship prizes"
+            accent="college"
+          >
+            <p className="body-measure text-ink-soft">
+              These are illustrative prize directions, not a set offer. Each one
+              is written to reward the behavior we actually care about, which is
+              real use of a live agent rather than a mention on a slide. Amounts
+              and terms are a placeholder for the team.
+            </p>
+            <ul className="mt-8 divide-y divide-line border-y border-line">
+              {PRIZE_DIRECTIONS.map((p) => (
+                <li key={p.title} className="py-4">
+                  <p className="text-sm text-ink">{p.title}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-ink-dim">
+                    {p.detail}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </DocsSection>
+
+          <DocsSection
+            id="why-sponsor"
+            eyebrow="College · TreeHacks"
+            title="Why we should sponsor"
+            accent="college"
+          >
+            <p className="body-measure text-ink-soft">
+              A sponsorship is worth it if all three sides come out ahead. Here
+              is the case, framed as directions we believe hold rather than a
+              committed plan.
+            </p>
+            <div className="mt-8 grid gap-px overflow-hidden rounded-lg border border-line bg-line">
+              {PARTNER_VALUE.map((v) => (
+                <div key={v.title} className="flex flex-col gap-2 bg-void p-6">
+                  <p className="text-sm text-ink">{v.title}</p>
+                  <p className="text-sm leading-relaxed text-ink-dim">
+                    {v.detail}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 rounded-xl border border-dashed border-line-strong p-6">
+              <p className="label text-ink-dim">
+                Sponsorship terms · point of contact
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-ink-faint">
+                To be added by the LiveX team. This is where the real
+                sponsorship tier, the deliverables, and the named point of
+                contact go once there is something to commit to.
+              </p>
+            </div>
+          </DocsSection>
+
+          <DocsSection
+            id="measurement-signals"
+            eyebrow="College · TreeHacks"
+            title="Measurement signals"
+            accent="college"
+          >
+            <p className="body-measure text-ink-soft">
+              We would name the signals to watch, not invent numbers. Each one
+              says what a healthy read would indicate. No targets are set here on
+              purpose.
+            </p>
+            <dl className="mt-8 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
+              {SIGNALS.map((s) => (
+                <div key={s.signal} className="flex flex-col gap-2 bg-void p-5">
+                  <dt className="font-mono text-sm text-college">{s.signal}</dt>
+                  <dd className="text-sm leading-relaxed text-ink-dim">
+                    {s.reads}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </DocsSection>
+
+          <DocsSection
+            id="risks-dependencies"
+            eyebrow="College · TreeHacks"
+            title="Risks and dependencies"
+            accent="college"
+          >
+            <p className="body-measure text-ink-soft">
+              The honest list of what could go wrong, each paired with how we
+              would hold it down.
+            </p>
+            <ul className="mt-8 divide-y divide-line border-y border-line">
+              {RISKS.map((r) => (
+                <li key={r.risk} className="py-4">
+                  <p className="text-sm text-ink">{r.risk}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-ink-dim">
+                    {r.mitigation}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </DocsSection>
+
+          <DocsSection
+            id="next-move"
+            eyebrow="College · TreeHacks"
+            title="Recommended next move"
+            accent="college"
+          >
             <div className="rounded-xl border border-line bg-charcoal p-7">
-              <h3 className="font-display text-2xl text-college">Why now</h3>
-              <p className="body-measure mt-4 text-ink-soft">{treehacks.whyNow}</p>
+              <p className="label-tight mb-3 text-college">Next 30 days</p>
+              <p className="font-display text-xl text-ink">
+                Prototype the handoff, not the hologram.
+              </p>
+              <p className="body-measure mt-3 text-ink-soft">
+                Build the single moment where a stated intent jumps from a
+                physical display to a phone with zero re-entry. If that one thing
+                lands, the rest of the arc is production work. If it does not, we
+                learn that cheaply and before any of the harder pieces.
+              </p>
             </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div>
-              <p className="label mb-4">Organizer &amp; sponsor value</p>
-              <ul className="divide-y divide-line border-y border-line">
-                {treehacks.partnerJourney.map((p) => (
-                  <li key={p.id} className="py-4">
-                    <p className="text-sm text-ink">{p.title}</p>
-                    <p className="mt-1 text-sm text-ink-dim">{p.detail}</p>
-                  </li>
-                ))}
-              </ul>
+          </DocsSection>
+
+          {/* ==================== STANDARD ==================== */}
+          <DocsSection
+            id="standard-partners"
+            eyebrow="Standard"
+            title="Potential partners"
+            accent="standard"
+          >
+            <div className="rounded-xl border border-dashed border-line-strong p-7">
+              <p className="label-tight mb-3 text-standard">In exploration</p>
+              <p className="body-measure text-ink-soft">
+                Nothing here is committed yet. The Standard world is where
+                commercial partners will go once a concept is real enough to
+                write down. For now it is a placeholder, kept deliberately empty
+                so it never reads as a deal that exists. When there is a partner
+                worth naming, it lands here with its own reasoning, the same way
+                TreeHacks does above.
+              </p>
             </div>
-          </Reveal>
+          </DocsSection>
         </div>
-
-        <div className="mt-16">
-          <p className="label mb-6">Measurement hypotheses</p>
-          <MetricHypotheses signals={treehacks.successSignals} accent="college" />
-        </div>
-
-        <div className="mt-16 grid gap-12 md:grid-cols-2">
-          <Reveal>
-            <div>
-              <p className="label mb-4">Risks &amp; dependencies</p>
-              <ul className="divide-y divide-line border-y border-line">
-                {treehacks.risksAndDependencies.map((r, i) => (
-                  <li key={i} className="py-4">
-                    <p className="text-sm text-ink">{r.risk}</p>
-                    <p className="mt-1 text-sm text-ink-dim">{r.mitigation}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="flex flex-col gap-6">
-              <div>
-                <p className="label mb-3 text-college">
-                  Recommended next move · {treehacks.nextStep.horizon}
-                </p>
-                <p className="font-display text-xl text-ink">
-                  {treehacks.nextStep.action}
-                </p>
-                <p className="mt-2 text-sm text-ink-soft">
-                  {treehacks.nextStep.detail}
-                </p>
-              </div>
-              <div className="rounded-xl border border-dashed border-line-strong p-6">
-                <p className="label text-ink-dim">
-                  Sponsorship directions · point of contact
-                </p>
-                <p className="mt-3 text-sm text-ink-faint">
-                  To be added by the LiveX team — a placeholder for the
-                  partnership case, sponsorship ideas, and the point of contact.
-                </p>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </Section>
-
-      {/* Index */}
-      <Section index="07" label="All concepts">
-        <div className="grid gap-12 md:grid-cols-2">
-          {(Object.keys(WORLDS) as World[]).map((key) => (
-            <Reveal key={key}>
-              <div>
-                <p className="label mb-4">{WORLDS[key].name}</p>
-                <ul className="border-t border-line">
-                  {getStrategiesByWorld(key).map((s) => (
-                    <li key={s.slug}>
-                      <Link
-                        href={`/strategy/${s.slug}`}
-                        className="cursor-target group flex items-baseline justify-between gap-4 border-b border-line py-4 transition-colors hover:bg-white/[0.015]"
-                      >
-                        <span className="font-display text-lg text-ink">{s.shortTitle}</span>
-                        <span className="label-tight shrink-0 text-ink-faint">{s.status}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-        <Reveal>
-          <p className="mt-12 border-l border-line-strong pl-4 text-sm leading-relaxed text-ink-faint">
-            {STRATEGIES.length} concepts, all internal hypotheses. Nothing here
-            implies a signed, approved, live, or endorsed partnership. No figures,
-            logos, or quotes are real; event palettes are illustrative only.
-          </p>
-        </Reveal>
-      </Section>
-
-      {/* Interaction kit */}
-      <Section
-        index="08"
-        label="Interaction kit"
-        title="Effects we can pull from"
-        intro="A live gallery of the interaction toolkit — hover, click, and type. The magnifying dock also runs as the site nav."
-      >
-        <InteractionKit />
-      </Section>
+      </DocsShell>
     </article>
   );
 }

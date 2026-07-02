@@ -15,7 +15,7 @@ import { accentFor, accentClasses } from "./theme";
 
 /**
  * The shared strategy detail template. Every non-flagship strategy renders
- * through this — one system, but varied layouts (bands, journeys, timelines,
+ * through this: one system, but varied layouts (bands, journeys, timelines,
  * pulled statements) so no two pages feel identical.
  */
 export function StrategyDetail({ strategy }: { strategy: Strategy }) {
@@ -65,7 +65,7 @@ export function StrategyDetail({ strategy }: { strategy: Strategy }) {
         label="What the user experiences"
         accent={accent}
         title="One intelligence, moving across surfaces"
-        intro="The interaction is designed to keep its context as it travels — nothing re-typed, nothing forgotten."
+        intro="The interaction is designed to keep its context as it travels: nothing re-typed, nothing forgotten."
       >
         <JourneyScene steps={strategy.userJourney} accent={accent} kind="user" />
       </Section>
@@ -144,7 +144,7 @@ export function StrategyDetail({ strategy }: { strategy: Strategy }) {
       <Section index="06" label="GTM motion" accent={accent}>
         <Reveal>
           <p className="text-display fluid-h3 max-w-4xl text-balance text-ink-soft">
-            <span className={a.text}>—&nbsp;</span>
+            <span className={a.text}>→&nbsp;</span>
             {strategy.gtmMotion}
           </p>
         </Reveal>

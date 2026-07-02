@@ -1,5 +1,5 @@
 /**
- * Minimal className joiner. Intentionally dependency-free — we keep the
+ * Minimal className joiner. Intentionally dependency-free - we keep the
  * bundle lean and our class usage disciplined enough not to need conflict
  * resolution.
  */

@@ -1,6 +1,6 @@
 /**
  * Fixed film-grain overlay. Static (never animated) and extremely low
- * opacity — it adds tactile texture to the near-black base without touching
+ * opacity - it adds tactile texture to the near-black base without touching
  * contrast or performance. Blends as soft-light so it only lifts the shadows.
  */
 const NOISE =

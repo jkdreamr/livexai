@@ -3,8 +3,8 @@ import type { Status } from "@/data/types";
 
 /**
  * Readiness label. Rendered verbatim so a concept never reads as a committed
- * partnership. The dot is a quiet intensity cue — brighter for the flagship
- * activation, dimmer for early exploration — never a ranking ladder.
+ * partnership. The dot is a quiet intensity cue - brighter for the flagship
+ * activation, dimmer for early exploration - never a ranking ladder.
  */
 const DOT: Record<Status, string> = {
   "Concept activation": "bg-ink",

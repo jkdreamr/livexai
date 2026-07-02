@@ -8,11 +8,11 @@ import { cn } from "@/lib/cn";
 import { useReducedMotion, useMounted } from "@/lib/hooks";
 
 /**
- * KitVideoReveal — Skiper67-style clip-path reveal. A dark thumbnail carries a
+ * KitVideoReveal - Skiper67-style clip-path reveal. A dark thumbnail carries a
  * mix-blend "Play" label that tracks the cursor; clicking expands a fullscreen
  * overlay from center (framer spring, circle clip-path) revealing an animated
  * mesh-gradient "media" with a faux mix-blend control bar and a close button.
- * No video asset — the shader stands in as the looping visual. Reduced-motion
+ * No video asset - the shader stands in as the looping visual. Reduced-motion
  * swaps the spring for a plain fade and drops the tracking label motion.
  */
 

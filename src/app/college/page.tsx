@@ -5,7 +5,7 @@ import { CollegeHeader } from "@/components/college/CollegeHeader";
 import { FlagshipFeature } from "@/components/college/FlagshipFeature";
 
 export const metadata: Metadata = {
-  title: "College — Campus & Students",
+  title: "College · Campus & Students",
   description: WORLDS.college.longThesis,
 };
 

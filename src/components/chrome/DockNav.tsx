@@ -20,7 +20,7 @@ const NAV = [
 ];
 
 /**
- * A magnifying dock nav — items swell and lift as the pointer nears (macOS
+ * A magnifying dock nav - items swell and lift as the pointer nears (macOS
  * dock physics, framer springs). Falls back to a plain row on touch / reduced
  * motion. The active item keeps a sliding pill.
  */

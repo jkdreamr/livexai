@@ -4,7 +4,7 @@ import type { VisualTheme } from "@/data/types";
 /**
  * A quiet, procedural hero backdrop that varies by motif so detail pages
  * stay in one system without feeling templated. Static SVG + layered radial
- * light — no animation, no noise, restrained accent only.
+ * light - no animation, no noise, restrained accent only.
  */
 const SCATTER = [
   [12, 24],

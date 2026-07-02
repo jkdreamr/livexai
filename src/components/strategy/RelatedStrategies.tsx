@@ -4,7 +4,7 @@ import { WORLDS } from "@/data/types";
 import { AnimatedArrow } from "@/components/skiper/AnimatedArrow";
 import { accentFor, accentClasses } from "./theme";
 
-/** Adjacent paths — minimal editorial rows, not repeated heavy cards. */
+/** Adjacent paths - minimal editorial rows, not repeated heavy cards. */
 export function RelatedStrategies({ items }: { items: Strategy[] }) {
   if (items.length === 0) return null;
   return (

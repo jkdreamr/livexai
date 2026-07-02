@@ -1,12 +1,12 @@
 import Link from "next/link";
 
 const WORLDS = [
-  { href: "/college", label: "College — Campus & Builder Motion" },
-  { href: "/standard", label: "Standard — Partner & Field Motion" },
+  { href: "/college", label: "College · Campus & Builder Motion" },
+  { href: "/standard", label: "Standard · Partner & Field Motion" },
 ];
 
 const META = [
-  { href: "/docs", label: "Docs — the thinking" },
+  { href: "/docs", label: "Docs · the thinking" },
   { href: "/strategy/treehacks-builder-guide", label: "Flagship: TreeHacks" },
 ];
 

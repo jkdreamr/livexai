@@ -4,7 +4,7 @@ import { StandardHeader } from "@/components/standard/StandardHeader";
 import { StandardExploration } from "@/components/standard/StandardExploration";
 
 export const metadata: Metadata = {
-  title: "Standard — Potential Partners",
+  title: "Standard · Potential Partners",
   description: WORLDS.standard.longThesis,
 };
 
