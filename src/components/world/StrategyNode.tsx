@@ -41,7 +41,7 @@ export function StrategyNode({
       onBlur={onDeactivate}
       aria-label={`${strategy.title} — ${strategy.status}. ${strategy.oneLineThesis}`}
       className={cn(
-        "group relative flex flex-col items-center outline-none transition-opacity duration-500",
+        "cursor-target group relative flex flex-col items-center outline-none transition-opacity duration-500",
         state === "dim" ? "opacity-35" : "opacity-100"
       )}
     >
@@ -137,7 +137,7 @@ export function StrategyNodeRow({
   return (
     <Link
       href={`/strategy/${strategy.slug}`}
-      className="group flex items-center gap-4 border-b border-line py-5 transition-colors hover:bg-white/[0.02]"
+      className="cursor-target group flex items-center gap-4 border-b border-line py-5 transition-colors hover:bg-white/[0.02]"
     >
       <span
         className="relative grid size-12 shrink-0 place-items-center rounded-full border"

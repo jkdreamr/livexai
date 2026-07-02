@@ -22,7 +22,7 @@ export function WorldOutro({ from }: { from: World }) {
         <div className="flex flex-col gap-3">
           <Link
             href={other.href}
-            className="group relative overflow-hidden rounded-xl border border-line bg-charcoal p-6 transition-colors hover:border-line-strong"
+            className="cursor-target group relative overflow-hidden rounded-xl border border-line bg-charcoal p-6 transition-colors hover:border-line-strong"
           >
             <div
               aria-hidden
@@ -48,7 +48,7 @@ export function WorldOutro({ from }: { from: World }) {
 
           <Link
             href="/system"
-            className="group flex items-center justify-between rounded-xl border border-line px-6 py-4 text-ink-soft transition-colors hover:bg-white/[0.02] hover:text-ink"
+            className="cursor-target group flex items-center justify-between rounded-xl border border-line px-6 py-4 text-ink-soft transition-colors hover:bg-white/[0.02] hover:text-ink"
           >
             <span className="label-tight">How the Surface Map works · System overview</span>
             <span aria-hidden className="transition-transform group-hover:translate-x-1">

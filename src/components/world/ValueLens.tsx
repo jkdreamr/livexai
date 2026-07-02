@@ -49,7 +49,7 @@ export function ValueLens({
               aria-selected={active}
               onClick={() => onChange(l.key)}
               className={cn(
-                "relative rounded-full px-3.5 py-1.5 label-tight transition-colors duration-300",
+                "cursor-target relative rounded-full px-3.5 py-1.5 label-tight transition-colors duration-300",
                 active ? "text-void" : "text-ink-dim hover:text-ink"
               )}
             >

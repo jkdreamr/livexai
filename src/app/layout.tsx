@@ -3,6 +3,7 @@ import { Fraunces, Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/chrome/SiteHeader";
 import { SiteFooter } from "@/components/chrome/SiteFooter";
+import { Cursor } from "@/components/chrome/Cursor";
 import { Grain } from "@/components/atmosphere/Grain";
 
 const fraunces = Fraunces({
@@ -51,6 +52,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <Grain />
+        <Cursor />
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />

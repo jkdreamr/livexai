@@ -34,7 +34,7 @@ export function SiteHeader() {
       <div className="container-x flex h-16 items-center justify-between">
         <Link
           href="/"
-          className="group flex items-baseline gap-2"
+          className="cursor-target group flex items-baseline gap-2"
           aria-label="LiveX Surface Map — home"
         >
           <span className="font-display text-[1.35rem] leading-none tracking-tight text-ink transition-opacity group-hover:opacity-80">
@@ -55,7 +55,7 @@ export function SiteHeader() {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "relative rounded-full px-3 py-1.5 label-tight transition-colors duration-300 sm:px-4",
+                  "cursor-target relative rounded-full px-3 py-1.5 label-tight transition-colors duration-300 sm:px-4",
                   active ? "text-ink" : "text-ink-dim hover:text-ink-soft"
                 )}
               >

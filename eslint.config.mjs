@@ -12,7 +12,19 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored open-source effect components (React Bits) + installed skills.
+    ".agents/**",
   ]),
+  // Vendored third-party effect components: relax rules we don't own.
+  {
+    files: ["src/components/reactbits/**/*.{ts,tsx}"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "prefer-const": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

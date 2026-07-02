@@ -14,7 +14,7 @@ export function RelatedStrategies({ items }: { items: Strategy[] }) {
           <li key={s.id}>
             <Link
               href={`/strategy/${s.slug}`}
-              className="group grid items-baseline gap-2 border-b border-line py-7 transition-colors hover:bg-white/[0.015] sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-8"
+              className="cursor-target group grid items-baseline gap-2 border-b border-line py-7 transition-colors hover:bg-white/[0.015] sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-8"
             >
               <div>
                 <div className="flex items-center gap-3">
