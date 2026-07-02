@@ -78,13 +78,6 @@ export function FlagshipFeature({ strategy }: { strategy: Strategy }) {
           </div>
         </Link>
       </Reveal>
-
-      <Reveal delay={0.1} className="mt-10">
-        <p className="body-measure text-sm text-ink-faint">
-          More campus concepts are in exploration. This world grows one sharp,
-          repeatable experiment at a time.
-        </p>
-      </Reveal>
     </section>
   );
 }

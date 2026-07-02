@@ -13,6 +13,7 @@ import { SurfaceGlyph } from "@/components/ui/Surface";
 import { MetricHypotheses } from "@/components/strategy/MetricHypotheses";
 import { accentClasses } from "@/components/strategy/theme";
 import { DocsEyebrow } from "@/components/docs/DocsEyebrow";
+import { InteractionKit } from "@/components/docs/InteractionKit";
 import { Terminal } from "@/components/skiper/Terminal";
 
 const treehacks = getStrategyBySlug("treehacks-builder-guide")!;
@@ -295,6 +296,16 @@ export default function DocsPage() {
             logos, or quotes are real; event palettes are illustrative only.
           </p>
         </Reveal>
+      </Section>
+
+      {/* Interaction kit */}
+      <Section
+        index="08"
+        label="Interaction kit"
+        title="Effects we can pull from"
+        intro="A live gallery of the interaction toolkit — hover, click, and type. The magnifying dock also runs as the site nav."
+      >
+        <InteractionKit />
       </Section>
     </article>
   );
