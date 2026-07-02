@@ -1,0 +1,310 @@
+@import "tailwindcss";
+
+/* ============================================================
+   LiveX / Surface Map — design tokens
+   A restrained, spatial, editorial dark system. World identity
+   is carried by material + light, not blunt color coding.
+   ============================================================ */
+
+@theme {
+  /* --- Surfaces: near-black void → charcoal → raised surface --- */
+  --color-void: #07080b;
+  --color-abyss: #0a0c11;
+  --color-charcoal: #0f131a;
+  --color-surface: #141922;
+  --color-surface-2: #1b212c;
+
+  /* --- Ink --- */
+  --color-ink: #eceef3;
+  --color-ink-soft: #b4bac6;
+  --color-ink-dim: #79818f;
+  --color-ink-faint: #4b515c;
+
+  /* --- Hairlines --- */
+  --color-line: rgba(255, 255, 255, 0.09);
+  --color-line-strong: rgba(255, 255, 255, 0.16);
+
+  /* --- World signals (used sparingly, as light) --- */
+  /* College — cool, luminous, kinetic */
+  --color-college: #7fead1;
+  --color-college-deep: #21c39a;
+  /* Standard — warm, architectural, weighted */
+  --color-standard: #eaad78;
+  --color-standard-deep: #c67f3d;
+
+  /* --- Type --- */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", monospace;
+
+  /* --- Radius --- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+
+  /* --- Ease (mirrors src/lib/motion.ts) --- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(127, 234, 209, 0.24);
+    color: #eafff8;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* Hairline default so `border` reads as our line token */
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-line);
+  }
+}
+
+/* ============================================================
+   Editorial typography helpers
+   ============================================================ */
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+
+.text-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 360;
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+}
+
+.text-display em {
+  font-style: italic;
+  font-weight: 360;
+}
+
+.fluid-hero {
+  font-size: clamp(2.9rem, 8.5vw, 8rem);
+}
+.fluid-h1 {
+  font-size: clamp(2.3rem, 5.2vw, 4.6rem);
+}
+.fluid-h2 {
+  font-size: clamp(1.8rem, 3.4vw, 3rem);
+}
+.fluid-h3 {
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+}
+.fluid-lead {
+  font-size: clamp(1.08rem, 1.5vw, 1.4rem);
+  line-height: 1.5;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-ink-dim);
+  font-weight: 500;
+}
+
+.label-tight {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.body-measure {
+  max-width: 62ch;
+  line-height: 1.65;
+  color: var(--color-ink-soft);
+}
+
+/* ============================================================
+   Layout helpers
+   ============================================================ */
+
+.container-x {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 90rem;
+  padding-inline: clamp(1.25rem, 4.5vw, 4.5rem);
+}
+
+.container-reading {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 46rem;
+  padding-inline: clamp(1.25rem, 4.5vw, 2rem);
+}
+
+/* Full-viewport section that respects mobile browser chrome */
+.screen {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ============================================================
+   Surface treatments
+   ============================================================ */
+
+.panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+    var(--color-charcoal);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+}
+
+.panel-inset {
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+}
+
+.hairline {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-line-strong) 15%,
+    var(--color-line-strong) 85%,
+    transparent
+  );
+}
+
+/* Ambient light wash — used behind hero content */
+.haze {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Text link with animated underline */
+.ulink {
+  position: relative;
+  color: var(--color-ink-soft);
+  transition: color 0.3s var(--ease-out);
+}
+.ulink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out);
+}
+.ulink:hover {
+  color: var(--color-ink);
+}
+.ulink:hover::after {
+  transform: scaleX(1);
+}
+
+/* ============================================================
+   Motion keyframes (decorative — disabled under reduced-motion)
+   ============================================================ */
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes drift-slow {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(2%, -2.5%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes trace {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.will-breathe {
+  animation: breathe 7s var(--ease-inout) infinite;
+}
+.will-drift {
+  animation: drift-slow 22s var(--ease-inout) infinite;
+}
+
+/* Thin custom scrollbar for the dark surface */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+::-webkit-scrollbar-thumb {
+  background: #232a35;
+  border-radius: 20px;
+  border: 3px solid var(--color-void);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2f3745;
+}
+
+/* ============================================================
+   Reduced motion — collapse decorative motion, keep hierarchy
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
