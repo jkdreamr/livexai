@@ -213,7 +213,7 @@ export const WORLDS: Record<World, WorldMeta> = {
   college: {
     key: "college",
     name: "College",
-    subtitle: "Campus & Builder Motion",
+    subtitle: "Campus & Students",
     headline: "A living campus signal network.",
     thesis:
       "Reach ambitious student builders where they already gather, then grow campus experiments into broader pilots.",
@@ -226,7 +226,7 @@ export const WORLDS: Record<World, WorldMeta> = {
   standard: {
     key: "standard",
     name: "Standard",
-    subtitle: "Partner & Field Motion",
+    subtitle: "Potential Partners",
     headline: "A strategic field map of commercial opportunity.",
     thesis:
       "Deploy LiveX experiences with commercial partners where a physical moment can become measurable digital pipeline.",

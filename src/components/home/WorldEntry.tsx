@@ -36,11 +36,11 @@ export function WorldEntry() {
     <section className="screen relative flex flex-col items-center justify-center overflow-hidden">
       {/* Restrained living shader */}
       {showShader && (
-        <div aria-hidden className="absolute inset-0 z-0 opacity-[0.55]">
+        <div aria-hidden className="absolute inset-0 z-0 opacity-[0.5]">
           <LiquidChrome
-            baseColor={[0.02, 0.045, 0.09]}
-            speed={0.34}
-            amplitude={0.32}
+            baseColor={[0.05, 0.035, 0.33]}
+            speed={0.3}
+            amplitude={0.3}
             frequencyX={2.6}
             frequencyY={2}
             interactive={!isMobile}
@@ -50,13 +50,13 @@ export function WorldEntry() {
       {/* Veil the shader into the void so it stays quiet */}
       <div
         aria-hidden
-        className="absolute inset-0 z-0 [background:radial-gradient(120%_95%_at_50%_50%,transparent_28%,rgba(7,8,11,0.72)_66%,var(--color-void))]"
+        className="absolute inset-0 z-0 [background:radial-gradient(120%_95%_at_50%_50%,transparent_28%,rgba(7,9,16,0.72)_66%,var(--color-void))]"
       />
 
       {/* Hero */}
       <div className="relative z-10 flex flex-col items-center px-6 text-center">
         <DecryptedText
-          text="LIVEX · SURFACE MAP"
+          text="LIVEX AI"
           animateOn="view"
           sequential
           speed={38}
@@ -67,8 +67,8 @@ export function WorldEntry() {
           <TrueFocus
             sentence="One agent, every surface"
             blurAmount={4}
-            borderColor="#93a7c8"
-            glowColor="rgba(147,167,200,0.45)"
+            borderColor="#2f80ff"
+            glowColor="rgba(0,102,255,0.5)"
             animationDuration={0.55}
             pauseBetweenAnimations={1.5}
           />

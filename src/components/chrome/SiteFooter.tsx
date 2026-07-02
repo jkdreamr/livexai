@@ -17,7 +17,6 @@ export function SiteFooter() {
         <div className="max-w-md">
           <div className="flex items-baseline gap-2">
             <span className="font-display text-xl text-ink">LiveX</span>
-            <span className="label-tight text-ink-dim">/ Surface Map</span>
           </div>
           <p className="mt-5 text-sm leading-relaxed text-ink-dim">
             An internal strategy universe for how a single LiveX intelligence
@@ -63,9 +62,7 @@ export function SiteFooter() {
           <p className="label-tight text-ink-faint">
             Internal use · Strategy exploration · Not for external distribution
           </p>
-          <p className="label-tight text-ink-faint">
-            LiveX AI · Surface Map v1
-          </p>
+          <p className="label-tight text-ink-faint">LiveX AI · v1</p>
         </div>
       </div>
     </footer>
