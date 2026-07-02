@@ -8,7 +8,7 @@ import { cn } from "@/lib/cn";
 const NAV = [
   { href: "/college", label: "College" },
   { href: "/standard", label: "Standard" },
-  { href: "/system", label: "System" },
+  { href: "/docs", label: "Docs" },
 ];
 
 export function SiteHeader() {

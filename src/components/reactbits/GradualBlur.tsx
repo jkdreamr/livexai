@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable */
 // Vendored from React Bits (GradualBlur) — adapted: CSS moved to globals,
 // no external deps. Progressive edge blur overlay.
 import React, { useEffect, useRef, useState, useMemo } from "react";

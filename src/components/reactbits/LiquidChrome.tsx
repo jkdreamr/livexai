@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable */
 // Vendored from React Bits (LiquidChrome) — CSS moved to globals.
 import { useRef, useEffect } from "react";
 import { Renderer, Program, Mesh, Triangle } from "ogl";

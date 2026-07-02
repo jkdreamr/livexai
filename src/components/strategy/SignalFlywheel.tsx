@@ -26,12 +26,11 @@ export function SignalFlywheel({
   const mounted = useMounted();
   const live = mounted && !reduced;
 
-  const [active, setActive] = useState(-1);
+  const [active, setActive] = useState(0);
   const [pinned, setPinned] = useState(false);
 
   useEffect(() => {
     if (!live || pinned) return;
-    setActive(0);
     const id = setInterval(
       () => setActive((p) => (p + 1) % nodes.length),
       1500

@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable */
 // Vendored from React Bits (TrueFocus) — motion/react → framer-motion, CSS in globals.
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";

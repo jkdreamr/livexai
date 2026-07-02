@@ -1,12 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
-/** True only after the component has hydrated on the client. */
+const noopSubscribe = () => () => {};
+
+/** True only after the component has hydrated on the client (SSR-safe, no
+ *  setState-in-effect). */
 export function useMounted(): boolean {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  return mounted;
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false
+  );
 }
 
 /** Reactive media-query hook (SSR-safe: defaults to `false`). */

@@ -6,7 +6,7 @@ const WORLDS = [
 ];
 
 const META = [
-  { href: "/system", label: "System overview" },
+  { href: "/docs", label: "Docs — the thinking" },
   { href: "/strategy/treehacks-builder-guide", label: "Flagship: TreeHacks" },
 ];
 
