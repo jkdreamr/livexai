@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Strategy } from "@/data/types";
 import { WORLDS } from "@/data/types";
+import { AnimatedArrow } from "@/components/skiper/AnimatedArrow";
 import { accentFor, accentClasses } from "./theme";
 
 /** Adjacent paths — minimal editorial rows, not repeated heavy cards. */
@@ -30,11 +31,8 @@ export function RelatedStrategies({ items }: { items: Strategy[] }) {
                   {s.oneLineThesis}
                 </p>
               </div>
-              <span
-                aria-hidden
-                className="hidden text-ink-dim transition-transform group-hover:translate-x-1 sm:block"
-              >
-                →
+              <span className="hidden text-ink-dim sm:block">
+                <AnimatedArrow />
               </span>
             </Link>
           </li>

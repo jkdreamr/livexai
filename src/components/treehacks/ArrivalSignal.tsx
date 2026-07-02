@@ -7,6 +7,7 @@ import { cn } from "@/lib/cn";
 import { useReducedMotion } from "@/lib/hooks";
 import { ease } from "@/lib/motion";
 import { SurfaceGlyph } from "@/components/ui/Surface";
+import { Typewriter } from "@/components/skiper/Typewriter";
 import type { GuideState } from "./LiveGuide";
 
 const LiveGuide = dynamic(() => import("./LiveGuide").then((m) => m.LiveGuide), {
@@ -224,7 +225,11 @@ export function ArrivalSignal({ accent = "#42c58a" }: { accent?: string }) {
                         {PATHS.find((p) => p.id === path)?.label}
                       </p>
                       <p className="mt-1.5 text-[0.5rem] leading-tight text-ink-dim">
-                        {MOBILE_MESSAGE[path]}
+                        <Typewriter
+                          texts={[MOBILE_MESSAGE[path]]}
+                          typingSpeed={22}
+                          loop={false}
+                        />
                       </p>
                     </div>
                   </div>

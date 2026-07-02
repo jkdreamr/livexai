@@ -2,12 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { WORLDS, SURFACES } from "@/data/types";
 import type { SurfaceKey, World } from "@/data/types";
-import { STRATEGIES, getStrategiesByWorld } from "@/data/strategies";
+import {
+  STRATEGIES,
+  getStrategiesByWorld,
+  getStrategyBySlug,
+} from "@/data/strategies";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/strategy/Section";
 import { SurfaceGlyph } from "@/components/ui/Surface";
+import { MetricHypotheses } from "@/components/strategy/MetricHypotheses";
 import { accentClasses } from "@/components/strategy/theme";
 import { DocsEyebrow } from "@/components/docs/DocsEyebrow";
+import { Terminal } from "@/components/skiper/Terminal";
+
+const treehacks = getStrategyBySlug("treehacks-builder-guide")!;
 
 export const metadata: Metadata = {
   title: "Docs — the thinking behind the map",
@@ -134,16 +142,35 @@ export default function DocsPage() {
         title="One schema, many ideas"
         intro="Every concept is one object in src/data/strategies.ts. Add a new idea there and it gets a world node, a detail page, and cross-links — no layout code changes."
       >
-        <dl className="grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
-          {SCHEMA.map((row, i) => (
-            <Reveal key={row.field} delay={(i % 2) * 0.05}>
-              <div className="flex h-full flex-col gap-2 bg-void p-6">
-                <dt className="font-mono text-sm text-ink">{row.field}</dt>
-                <dd className="text-sm leading-relaxed text-ink-dim">{row.note}</dd>
-              </div>
-            </Reveal>
-          ))}
-        </dl>
+        <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] lg:items-start">
+          <dl className="grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
+            {SCHEMA.map((row, i) => (
+              <Reveal key={row.field} delay={(i % 2) * 0.05}>
+                <div className="flex h-full flex-col gap-2 bg-void p-6">
+                  <dt className="font-mono text-sm text-ink">{row.field}</dt>
+                  <dd className="text-sm leading-relaxed text-ink-dim">{row.note}</dd>
+                </div>
+              </Reveal>
+            ))}
+          </dl>
+          <Reveal delay={0.1}>
+            <Terminal
+              commands={[
+                "open src/data/strategies.ts",
+                "append one { Strategy }",
+                "npm run build",
+              ]}
+              outputs={{
+                1: [
+                  "→ node added to its world",
+                  "→ /strategy/[slug] generated",
+                  "→ related links wired",
+                ],
+                2: ["✓ compiled", "✓ concepts prerendered · static"],
+              }}
+            />
+          </Reveal>
+        </div>
       </Section>
 
       {/* The bar */}
@@ -160,8 +187,85 @@ export default function DocsPage() {
         </Reveal>
       </Section>
 
+      {/* TreeHacks — the case */}
+      <div id="treehacks" className="scroll-mt-24" />
+      <Section
+        index="06"
+        label="TreeHacks · the case"
+        accent="college"
+        title="Why this one, first"
+        intro={treehacks.whyLiveX}
+      >
+        <div className="grid gap-12 lg:grid-cols-2">
+          <Reveal>
+            <div className="rounded-xl border border-line bg-charcoal p-7">
+              <h3 className="font-display text-2xl text-college">Why now</h3>
+              <p className="body-measure mt-4 text-ink-soft">{treehacks.whyNow}</p>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div>
+              <p className="label mb-4">Organizer &amp; sponsor value</p>
+              <ul className="divide-y divide-line border-y border-line">
+                {treehacks.partnerJourney.map((p) => (
+                  <li key={p.id} className="py-4">
+                    <p className="text-sm text-ink">{p.title}</p>
+                    <p className="mt-1 text-sm text-ink-dim">{p.detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        </div>
+
+        <div className="mt-16">
+          <p className="label mb-6">Measurement hypotheses</p>
+          <MetricHypotheses signals={treehacks.successSignals} accent="college" />
+        </div>
+
+        <div className="mt-16 grid gap-12 md:grid-cols-2">
+          <Reveal>
+            <div>
+              <p className="label mb-4">Risks &amp; dependencies</p>
+              <ul className="divide-y divide-line border-y border-line">
+                {treehacks.risksAndDependencies.map((r, i) => (
+                  <li key={i} className="py-4">
+                    <p className="text-sm text-ink">{r.risk}</p>
+                    <p className="mt-1 text-sm text-ink-dim">{r.mitigation}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="flex flex-col gap-6">
+              <div>
+                <p className="label mb-3 text-college">
+                  Recommended next move · {treehacks.nextStep.horizon}
+                </p>
+                <p className="font-display text-xl text-ink">
+                  {treehacks.nextStep.action}
+                </p>
+                <p className="mt-2 text-sm text-ink-soft">
+                  {treehacks.nextStep.detail}
+                </p>
+              </div>
+              <div className="rounded-xl border border-dashed border-line-strong p-6">
+                <p className="label text-ink-dim">
+                  Sponsorship directions · point of contact
+                </p>
+                <p className="mt-3 text-sm text-ink-faint">
+                  To be added by the LiveX team — a placeholder for the
+                  partnership case, sponsorship ideas, and the point of contact.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </Section>
+
       {/* Index */}
-      <Section index="06" label="All concepts">
+      <Section index="07" label="All concepts">
         <div className="grid gap-12 md:grid-cols-2">
           {(Object.keys(WORLDS) as World[]).map((key) => (
             <Reveal key={key}>
