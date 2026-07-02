@@ -36,6 +36,12 @@
   --color-brand: #2f80ff;
   --color-brand-deep: #0066ff;
 
+  /* TreeHacks event - vibrant green + cosmic purple (treehacks.com) */
+  --color-tree: #2fe08a;
+  --color-tree-deep: #14b877;
+  --color-grape: #9d7bff;
+  --color-grape-deep: #7c5cff;
+
   /* --- Type --- */
   --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;

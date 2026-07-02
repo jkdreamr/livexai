@@ -17,6 +17,11 @@ export default function TreeHacksPage() {
     <article
       style={
         {
+          // The TreeHacks page wears the event's own palette (vibrant green +
+          // cosmic purple). Re-point the brand tokens so the whole demo shifts
+          // from LiveX blue to TreeHacks green without touching every class.
+          "--color-brand": brand.accent,
+          "--color-brand-deep": brand.accentDeep,
           "--color-college": brand.accent,
           "--color-college-deep": brand.accentDeep,
         } as React.CSSProperties
