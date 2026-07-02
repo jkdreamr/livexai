@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { ease } from "@/lib/motion";
 import { useReducedMotion } from "@/lib/hooks";
+import { streamGuide, type GuideMsg } from "@/lib/guide";
 import { Chatbot } from "./Chatbot";
 import type { AgentMood } from "./HoloAgent";
 
@@ -20,58 +21,85 @@ type Sponsor = {
   ideas: string[];
 };
 
-// Illustrative sample data.
+// Real TreeHacks 2026 sponsors. Tracks and prizes reflect public info and may
+// change. The build ideas are fallbacks; a connected model generates fresh ones.
 const SPONSORS: Sponsor[] = [
   {
-    name: "Northwind Cloud",
-    tag: "Infra",
+    name: "OpenAI",
+    tag: "AI",
     accent: "tree",
-    blurb: "Compute a lot of projects run on.",
-    tracks: ["Edge compute", "Efficient pipeline"],
-    prize: "Credits + fast-track interview",
+    blurb: "Builds ChatGPT and frontier models.",
+    tracks: ["Artificial Intelligence"],
+    prize: "Lunch with OpenAI engineers, ChatGPT Pro, and an interview",
     ideas: [
-      "Shift work to the edge when the network drops.",
-      "A live cost readout, priced per request.",
-      "Keep an agent warm between questions.",
+      "A voice agent that runs a full intake in one turn.",
+      "A tool that turns a repo into a live walkthrough.",
+      "An assistant that drafts, tests, and files its own fix.",
     ],
   },
   {
-    name: "Cadence Labs",
-    tag: "Dev tools",
+    name: "Anthropic",
+    tag: "AI",
     accent: "grape",
-    blurb: "Tooling teams reach for at 3am.",
-    tracks: ["Best DX", "Best CLI"],
-    prize: "Hardware kit + mentor time",
+    blurb: "Builds the Claude AI assistant.",
+    tracks: ["Human Flourishing", "Claude Agent SDK"],
+    prize: "Tungsten cubes and a year of Claude Pro",
     ideas: [
-      "Scaffold a demo from one sentence.",
-      "Review your diff before you push.",
-      "A setup step that cleans up after itself.",
+      "An agent that holds a task across three surfaces.",
+      "A Claude build that reviews a diff before you push.",
+      "A helper that turns messy notes into a plan.",
     ],
   },
   {
-    name: "Meridian AI",
-    tag: "Applied AI",
-    accent: "tree",
-    blurb: "Agents in real workflows, not slides.",
-    tracks: ["Best agent", "Useful automation"],
-    prize: "Pool split across the top three",
-    ideas: [
-      "Hold a task across three surfaces.",
-      "Carry context from kiosk to phone.",
-      "Resurface a week later with a nudge.",
-    ],
-  },
-  {
-    name: "Volt Robotics",
+    name: "NVIDIA",
     tag: "Hardware",
-    accent: "grape",
-    blurb: "Robots for the dull, repeated work.",
-    tracks: ["Best hardware", "Practical build"],
-    prize: "A robotics kit for the team",
+    accent: "tree",
+    blurb: "GPUs and edge AI hardware.",
+    tracks: ["Edge AI"],
+    prize: "DGX Spark and Jetson Orin Nano hardware",
     ideas: [
-      "Run the check-in line, hands free.",
-      "Sense when a room is full.",
-      "Deliver swag to the right table.",
+      "A model that shifts to the edge when the network drops.",
+      "On-device vision running on a Jetson.",
+      "A latency budget that shows cost per inference.",
+    ],
+  },
+  {
+    name: "Modal",
+    tag: "Infra",
+    accent: "grape",
+    blurb: "Serverless compute for AI inference.",
+    tracks: ["Inference", "Sandbox"],
+    prize: "$5,000 in Modal credits and an office visit",
+    ideas: [
+      "A cold start killer that keeps an agent warm.",
+      "A sandbox that runs untrusted code safely.",
+      "A batch job that prices each request live.",
+    ],
+  },
+  {
+    name: "Google",
+    tag: "Cloud",
+    accent: "tree",
+    blurb: "Cloud, AI, and consumer hardware.",
+    tracks: ["Cloud AI"],
+    prize: "Pixel phones, tablets, and watches",
+    ideas: [
+      "A handoff that carries context from a kiosk to a Pixel.",
+      "A cloud agent that scales to zero between asks.",
+      "A maps flow that routes you to the right room.",
+    ],
+  },
+  {
+    name: "Y Combinator",
+    tag: "Startups",
+    accent: "grape",
+    blurb: "Early-stage startup accelerator.",
+    tracks: ["Build an iconic YC company with AI"],
+    prize: "Guaranteed YC interview and partner office hours",
+    ideas: [
+      "A one sentence to MVP scaffolder.",
+      "A build that finds its first ten users for you.",
+      "An agent that runs the boring half of a startup.",
     ],
   },
 ];
@@ -177,7 +205,7 @@ export function SponsorsPanel({ setMood }: { setMood: (m: AgentMood) => void }) 
             </div>
           );
         })}
-        <p className="mt-1 label-tight text-ink-faint">Illustrative sample data.</p>
+        <p className="mt-1 label-tight text-ink-faint">TreeHacks 2026 sponsors. Details are public and may change.</p>
       </div>
 
       {/* context panel */}
@@ -202,7 +230,7 @@ export function SponsorsPanel({ setMood }: { setMood: (m: AgentMood) => void }) 
           {mode.kind === "brainstorm" && (
             <motion.div key={`bs${mode.i}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col">
               <p className={cn("label", ACCENT[SPONSORS[mode.i].accent].text)}>Ideas · {SPONSORS[mode.i].name}</p>
-              <IdeaStream key={mode.i} ideas={SPONSORS[mode.i].ideas} accent={SPONSORS[mode.i].accent} />
+              <IdeaStream key={mode.i} sponsor={SPONSORS[mode.i]} accent={SPONSORS[mode.i].accent} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -214,7 +242,7 @@ export function SponsorsPanel({ setMood }: { setMood: (m: AgentMood) => void }) 
 /* Brainstorm reads like a model answering: a beat of thinking, then ideas
    stream in one line at a time with a caret. Timers only, so the React
    Compiler stays happy. Remounted per sponsor via key, so no reset needed. */
-function IdeaStream({ ideas, accent }: { ideas: string[]; accent: Accent }) {
+function IdeaStream({ sponsor, accent }: { sponsor: Sponsor; accent: Accent }) {
   const reduced = useReducedMotion();
   const a = ACCENT[accent];
   const [done, setDone] = useState<string[]>([]);
@@ -224,56 +252,101 @@ function IdeaStream({ ideas, accent }: { ideas: string[]; accent: Accent }) {
   useEffect(() => {
     let cancelled = false;
     const timers: number[] = [];
+    const controller = new AbortController();
+    const clean = (s: string) => s.replace(/^\s*(?:\d+[.)]|[-*•])\s*/, "").trim();
+
+    // Fallback: type out the sponsor's offline ideas, line by line.
+    const runOffline = () => {
+      let line = 0;
+      let ch = 0;
+      const tick = () => {
+        if (cancelled) return;
+        if (line >= sponsor.ideas.length) {
+          setPhase("ready");
+          return;
+        }
+        const text = sponsor.ideas[line];
+        ch += 1;
+        setTyping(text.slice(0, ch));
+        if (ch >= text.length) {
+          const finished = text;
+          setDone((d) => [...d, finished]);
+          setTyping("");
+          line += 1;
+          ch = 0;
+          timers.push(window.setTimeout(tick, 320));
+        } else {
+          timers.push(window.setTimeout(tick, 20));
+        }
+      };
+      tick();
+    };
 
     if (reduced) {
       timers.push(
         window.setTimeout(() => {
-          if (cancelled) return;
-          setDone(ideas);
-          setPhase("ready");
+          if (!cancelled) {
+            setDone(sponsor.ideas);
+            setPhase("ready");
+          }
         }, 0)
       );
       return () => {
         cancelled = true;
+        controller.abort();
         timers.forEach((t) => window.clearTimeout(t));
       };
     }
 
-    let line = 0;
-    let ch = 0;
-    const tick = () => {
-      if (cancelled) return;
-      if (line >= ideas.length) {
-        setPhase("ready");
-        return;
-      }
-      const text = ideas[line];
-      ch += 1;
-      setTyping(text.slice(0, ch));
-      if (ch >= text.length) {
-        const finished = text;
-        setDone((d) => [...d, finished]);
-        setTyping("");
-        line += 1;
-        ch = 0;
-        timers.push(window.setTimeout(tick, 360));
-      } else {
-        timers.push(window.setTimeout(tick, 20));
-      }
-    };
     timers.push(
-      window.setTimeout(() => {
+      window.setTimeout(async () => {
         if (cancelled) return;
         setPhase("generating");
-        tick();
-      }, 750)
+        const messages: GuideMsg[] = [
+          {
+            role: "system",
+            content:
+              "You are the LiveX Builder Guide at TreeHacks. You suggest concrete, buildable hackathon project ideas. Never use em dashes.",
+          },
+          {
+            role: "user",
+            content: `Give exactly 3 short, concrete hackathon build ideas a student could make for ${sponsor.name} (${sponsor.blurb}), fitting their track "${sponsor.tracks[0]}". One idea per line. No numbering, no bullets, no preamble. Each under 14 words.`,
+          },
+        ];
+        const { provider, text } = await streamGuide(messages, {
+          maxTokens: 170,
+          temperature: 0.85,
+          signal: controller.signal,
+          onToken: (_chunk, full) => {
+            if (cancelled) return;
+            const lines = full.split("\n").map(clean).filter(Boolean);
+            if (lines.length > 1) {
+              setDone(lines.slice(0, -1));
+              setTyping(lines[lines.length - 1]);
+            } else if (lines.length === 1) {
+              setTyping(lines[0]);
+            }
+          },
+        });
+        if (cancelled) return;
+        if (provider === "none" || !text.trim()) {
+          setDone([]);
+          setTyping("");
+          runOffline();
+          return;
+        }
+        setDone(text.split("\n").map(clean).filter(Boolean).slice(0, 4));
+        setTyping("");
+        setPhase("ready");
+      }, 550)
     );
 
     return () => {
       cancelled = true;
+      controller.abort();
       timers.forEach((t) => window.clearTimeout(t));
     };
-  }, [ideas, reduced]);
+  }, [sponsor, reduced]);
 
   return (
     <div className="mt-4 flex flex-col">
