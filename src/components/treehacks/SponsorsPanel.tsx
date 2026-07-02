@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { ease } from "@/lib/motion";
+import { useReducedMotion } from "@/lib/hooks";
+import { streamGuide, type GuideMsg } from "@/lib/guide";
 import { Chatbot } from "./Chatbot";
 import type { AgentMood } from "./HoloAgent";
 
@@ -19,58 +21,85 @@ type Sponsor = {
   ideas: string[];
 };
 
-// Illustrative sample data.
+// Real TreeHacks 2026 sponsors. Tracks and prizes reflect public info and may
+// change. The build ideas are fallbacks; a connected model generates fresh ones.
 const SPONSORS: Sponsor[] = [
   {
-    name: "Northwind Cloud",
-    tag: "Infra",
+    name: "OpenAI",
+    tag: "AI",
     accent: "tree",
-    blurb: "Compute a lot of projects run on.",
-    tracks: ["Edge compute", "Efficient pipeline"],
-    prize: "Credits + fast-track interview",
+    blurb: "Builds ChatGPT and frontier models.",
+    tracks: ["Artificial Intelligence"],
+    prize: "Lunch with OpenAI engineers, ChatGPT Pro, and an interview",
     ideas: [
-      "Shift work to the edge when the network drops.",
-      "A live cost readout, priced per request.",
-      "Keep an agent warm between questions.",
+      "A voice agent that runs a full intake in one turn.",
+      "A tool that turns a repo into a live walkthrough.",
+      "An assistant that drafts, tests, and files its own fix.",
     ],
   },
   {
-    name: "Cadence Labs",
-    tag: "Dev tools",
+    name: "Anthropic",
+    tag: "AI",
     accent: "grape",
-    blurb: "Tooling teams reach for at 3am.",
-    tracks: ["Best DX", "Best CLI"],
-    prize: "Hardware kit + mentor time",
+    blurb: "Builds the Claude AI assistant.",
+    tracks: ["Human Flourishing", "Claude Agent SDK"],
+    prize: "Tungsten cubes and a year of Claude Pro",
     ideas: [
-      "Scaffold a demo from one sentence.",
-      "Review your diff before you push.",
-      "A setup step that cleans up after itself.",
+      "An agent that holds a task across three surfaces.",
+      "A Claude build that reviews a diff before you push.",
+      "A helper that turns messy notes into a plan.",
     ],
   },
   {
-    name: "Meridian AI",
-    tag: "Applied AI",
-    accent: "tree",
-    blurb: "Agents in real workflows, not slides.",
-    tracks: ["Best agent", "Useful automation"],
-    prize: "Pool split across the top three",
-    ideas: [
-      "Hold a task across three surfaces.",
-      "Carry context from kiosk to phone.",
-      "Resurface a week later with a nudge.",
-    ],
-  },
-  {
-    name: "Volt Robotics",
+    name: "NVIDIA",
     tag: "Hardware",
-    accent: "grape",
-    blurb: "Robots for the dull, repeated work.",
-    tracks: ["Best hardware", "Practical build"],
-    prize: "A robotics kit for the team",
+    accent: "tree",
+    blurb: "GPUs and edge AI hardware.",
+    tracks: ["Edge AI"],
+    prize: "DGX Spark and Jetson Orin Nano hardware",
     ideas: [
-      "Run the check-in line, hands free.",
-      "Sense when a room is full.",
-      "Deliver swag to the right table.",
+      "A model that shifts to the edge when the network drops.",
+      "On-device vision running on a Jetson.",
+      "A latency budget that shows cost per inference.",
+    ],
+  },
+  {
+    name: "Modal",
+    tag: "Infra",
+    accent: "grape",
+    blurb: "Serverless compute for AI inference.",
+    tracks: ["Inference", "Sandbox"],
+    prize: "$5,000 in Modal credits and an office visit",
+    ideas: [
+      "A cold start killer that keeps an agent warm.",
+      "A sandbox that runs untrusted code safely.",
+      "A batch job that prices each request live.",
+    ],
+  },
+  {
+    name: "Google",
+    tag: "Cloud",
+    accent: "tree",
+    blurb: "Cloud, AI, and consumer hardware.",
+    tracks: ["Cloud AI"],
+    prize: "Pixel phones, tablets, and watches",
+    ideas: [
+      "A handoff that carries context from a kiosk to a Pixel.",
+      "A cloud agent that scales to zero between asks.",
+      "A maps flow that routes you to the right room.",
+    ],
+  },
+  {
+    name: "Y Combinator",
+    tag: "Startups",
+    accent: "grape",
+    blurb: "Early-stage startup accelerator.",
+    tracks: ["Build an iconic YC company with AI"],
+    prize: "Guaranteed YC interview and partner office hours",
+    ideas: [
+      "A one sentence to MVP scaffolder.",
+      "A build that finds its first ten users for you.",
+      "An agent that runs the boring half of a startup.",
     ],
   },
 ];
@@ -176,7 +205,7 @@ export function SponsorsPanel({ setMood }: { setMood: (m: AgentMood) => void }) 
             </div>
           );
         })}
-        <p className="mt-1 label-tight text-ink-faint">Illustrative sample data.</p>
+        <p className="mt-1 label-tight text-ink-faint">TreeHacks 2026 sponsors. Details are public and may change.</p>
       </div>
 
       {/* context panel */}
@@ -201,18 +230,187 @@ export function SponsorsPanel({ setMood }: { setMood: (m: AgentMood) => void }) 
           {mode.kind === "brainstorm" && (
             <motion.div key={`bs${mode.i}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col">
               <p className={cn("label", ACCENT[SPONSORS[mode.i].accent].text)}>Ideas · {SPONSORS[mode.i].name}</p>
-              <ul className="mt-4 flex flex-col gap-2">
-                {SPONSORS[mode.i].ideas.map((idea, k) => (
-                  <motion.li key={idea} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: k * 0.08, duration: 0.4, ease: ease.out }} className="flex items-start gap-3 rounded-lg border border-line bg-white/[0.02] p-3 text-sm text-ink-soft">
-                    <span className={cn("mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-[0.65rem]", ACCENT[SPONSORS[mode.i].accent].num)}>{k + 1}</span>
-                    {idea}
-                  </motion.li>
-                ))}
-              </ul>
+              <IdeaStream key={mode.i} sponsor={SPONSORS[mode.i]} accent={SPONSORS[mode.i].accent} />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
     </div>
+  );
+}
+
+/* Brainstorm reads like a model answering: a beat of thinking, then ideas
+   stream in one line at a time with a caret. Timers only, so the React
+   Compiler stays happy. Remounted per sponsor via key, so no reset needed. */
+function IdeaStream({ sponsor, accent }: { sponsor: Sponsor; accent: Accent }) {
+  const reduced = useReducedMotion();
+  const a = ACCENT[accent];
+  const [done, setDone] = useState<string[]>([]);
+  const [typing, setTyping] = useState("");
+  const [phase, setPhase] = useState<"thinking" | "generating" | "ready">("thinking");
+
+  useEffect(() => {
+    let cancelled = false;
+    const timers: number[] = [];
+    const controller = new AbortController();
+    const clean = (s: string) => s.replace(/^\s*(?:\d+[.)]|[-*•])\s*/, "").trim();
+
+    // Fallback: type out the sponsor's offline ideas, line by line.
+    const runOffline = () => {
+      let line = 0;
+      let ch = 0;
+      const tick = () => {
+        if (cancelled) return;
+        if (line >= sponsor.ideas.length) {
+          setPhase("ready");
+          return;
+        }
+        const text = sponsor.ideas[line];
+        ch += 1;
+        setTyping(text.slice(0, ch));
+        if (ch >= text.length) {
+          const finished = text;
+          setDone((d) => [...d, finished]);
+          setTyping("");
+          line += 1;
+          ch = 0;
+          timers.push(window.setTimeout(tick, 320));
+        } else {
+          timers.push(window.setTimeout(tick, 20));
+        }
+      };
+      tick();
+    };
+
+    if (reduced) {
+      timers.push(
+        window.setTimeout(() => {
+          if (!cancelled) {
+            setDone(sponsor.ideas);
+            setPhase("ready");
+          }
+        }, 0)
+      );
+      return () => {
+        cancelled = true;
+        controller.abort();
+        timers.forEach((t) => window.clearTimeout(t));
+      };
+    }
+
+    timers.push(
+      window.setTimeout(async () => {
+        if (cancelled) return;
+        setPhase("generating");
+        const messages: GuideMsg[] = [
+          {
+            role: "system",
+            content:
+              "You are the LiveX Builder Guide at TreeHacks. You suggest concrete, buildable hackathon project ideas. Never use em dashes.",
+          },
+          {
+            role: "user",
+            content: `Give exactly 3 short, concrete hackathon build ideas a student could make for ${sponsor.name} (${sponsor.blurb}), fitting their track "${sponsor.tracks[0]}". One idea per line. No numbering, no bullets, no preamble. Each under 14 words.`,
+          },
+        ];
+        const { provider, text } = await streamGuide(messages, {
+          maxTokens: 170,
+          temperature: 0.85,
+          signal: controller.signal,
+          onToken: (_chunk, full) => {
+            if (cancelled) return;
+            const lines = full.split("\n").map(clean).filter(Boolean);
+            if (lines.length > 1) {
+              setDone(lines.slice(0, -1));
+              setTyping(lines[lines.length - 1]);
+            } else if (lines.length === 1) {
+              setTyping(lines[0]);
+            }
+          },
+        });
+        if (cancelled) return;
+        if (provider === "none" || !text.trim()) {
+          setDone([]);
+          setTyping("");
+          runOffline();
+          return;
+        }
+        setDone(text.split("\n").map(clean).filter(Boolean).slice(0, 4));
+        setTyping("");
+        setPhase("ready");
+      }, 550)
+    );
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+      timers.forEach((t) => window.clearTimeout(t));
+    };
+  }, [sponsor, reduced]);
+
+  return (
+    <div className="mt-4 flex flex-col">
+      <div className="flex items-center gap-2">
+        <span className={cn("grid size-5 place-items-center rounded-full", a.num)}>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+            <path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z" />
+          </svg>
+        </span>
+        <span className="label-tight text-ink-dim">
+          {phase === "thinking" ? "Thinking" : phase === "generating" ? "Generating" : "Ready"}
+        </span>
+        {phase !== "ready" && !reduced && <Dots />}
+      </div>
+
+      <ul className="mt-4 flex flex-col gap-2">
+        {done.map((idea, k) => (
+          <IdeaRow key={idea} n={k + 1} a={a}>
+            {idea}
+          </IdeaRow>
+        ))}
+        {typing && (
+          <IdeaRow n={done.length + 1} a={a}>
+            {typing}
+            <motion.span
+              aria-hidden
+              className={cn("ml-0.5 inline-block h-3.5 w-[3px] translate-y-[2px] rounded-[1px]", a.dot)}
+              animate={{ opacity: [1, 1, 0, 0] }}
+              transition={{ duration: 0.9, repeat: Infinity, times: [0, 0.5, 0.5, 1] }}
+            />
+          </IdeaRow>
+        )}
+      </ul>
+
+      <p className="mt-4 label-tight text-ink-faint">A live model tailors these to your build.</p>
+    </div>
+  );
+}
+
+function Dots() {
+  return (
+    <span className="flex items-center gap-1">
+      {[0, 1, 2].map((i) => (
+        <motion.span
+          key={i}
+          className="size-1 rounded-full bg-ink-dim"
+          animate={{ opacity: [0.2, 1, 0.2] }}
+          transition={{ duration: 1, repeat: Infinity, delay: i * 0.18 }}
+        />
+      ))}
+    </span>
+  );
+}
+
+function IdeaRow({ n, a, children }: { n: number; a: (typeof ACCENT)[Accent]; children: ReactNode }) {
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: ease.out }}
+      className="flex items-start gap-3 rounded-lg border border-line bg-white/[0.02] p-3 text-sm text-ink-soft"
+    >
+      <span className={cn("mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-[0.65rem]", a.num)}>{n}</span>
+      <span className="min-w-0">{children}</span>
+    </motion.li>
   );
 }

@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic";
 import TextPressure from "@/components/reactbits/TextPressure";
 import GradualBlur from "@/components/reactbits/GradualBlur";
-import { StatusTag } from "@/components/ui/StatusTag";
 import { useIsMobile, useReducedMotion } from "@/lib/hooks";
 
 const GhostCursor = dynamic(
@@ -11,18 +10,8 @@ const GhostCursor = dynamic(
   { ssr: false }
 );
 
-/** Original, stylized evergreen mark - an illustrative nod, not a reproduction
- *  of any real event logo. */
-function TreeMark({ color }: { color: string }) {
-  return (
-    <svg viewBox="0 0 40 44" width="34" height="38" aria-hidden fill="none">
-      <path d="M20 3 L31 18 H24 L33 31 H23 V40 H17 V31 H7 L16 18 H9 Z" fill={color} opacity="0.9" />
-    </svg>
-  );
-}
-
 export function TreeHacksHero({
-  accent = "#42c58a",
+  accent = "#2fe08a",
   brandName = "TreeHacks",
 }: {
   accent?: string;
@@ -55,29 +44,29 @@ export function TreeHacksHero({
       />
 
       <div className="relative z-10 flex w-full flex-col items-center px-6 text-center">
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <StatusTag status="Concept activation" />
-          <span className="label-tight text-ink-faint">Illustrative event integration</span>
+        <div className="flex items-center gap-3 sm:gap-4">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/livex-logo.svg" alt="LiveX AI" className="h-7 w-auto sm:h-8" />
+          <span className="text-lg font-light text-ink-faint">&times;</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/treehacks-logo.webp" alt="" className="h-9 w-auto sm:h-10" />
+          <span className="label text-ink-dim">{brandName}</span>
         </div>
 
-        <div className="mt-9 flex items-center gap-3">
-          <TreeMark color={accent} />
-          <span className="label text-ink-dim">{brandName} × LiveX AI</span>
-        </div>
-
-        <div className="mt-6 h-[16vh] w-full max-w-4xl sm:h-[20vh]">
+        <div className="mt-12 flex h-[clamp(84px,17vw,172px)] w-[80%] max-w-[42rem] items-center justify-center">
           <TextPressure
             text="TREEHACKS"
             fontFamily="var(--font-sans)"
             weight
             width={false}
             italic={false}
+            flex={false}
             textColor="#eceef3"
-            minFontSize={44}
+            minFontSize={40}
           />
         </div>
 
-        <p className="text-display fluid-h3 mt-6 italic text-ink-soft">
+        <p className="text-display fluid-h3 mt-12 italic text-ink-soft">
           &ldquo;What are you here to build?&rdquo;
         </p>
       </div>

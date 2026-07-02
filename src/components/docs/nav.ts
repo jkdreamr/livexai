@@ -55,8 +55,6 @@ export const DOCS_OUTLINE: DocsWorldNode[] = [
           { id: "sponsorship-prizes", label: "Possible sponsorship prizes" },
           { id: "why-sponsor", label: "Why we should sponsor" },
           { id: "measurement-signals", label: "Measurement signals" },
-          { id: "risks-dependencies", label: "Risks and dependencies" },
-          { id: "next-move", label: "Recommended next move" },
         ],
       },
     ],

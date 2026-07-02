@@ -27,12 +27,15 @@ export function SiteHeader() {
       <div className="container-x flex h-16 items-center justify-between">
         <Link
           href="/"
-          className="cursor-target group flex items-baseline gap-2"
-          aria-label="LiveX home"
+          className="cursor-target group flex items-center"
+          aria-label="LiveX AI home"
         >
-          <span className="font-display text-[1.35rem] leading-none tracking-tight text-ink transition-opacity group-hover:opacity-80">
-            LiveX
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/livex-logo-alt.svg"
+            alt="LiveX AI"
+            className="h-5 w-auto transition-opacity group-hover:opacity-80"
+          />
         </Link>
 
         <DockNav />
