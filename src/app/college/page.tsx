@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { WORLDS } from "@/data/types";
+import { getStrategiesByWorld } from "@/data/strategies";
+import { CollegeHero } from "@/components/college/CollegeHero";
 import {
-  getStrategiesByWorld,
-  countByWorld,
-  surfacesForWorld,
-} from "@/data/strategies";
-import { WorldHero } from "@/components/world/WorldHero";
-import { StrategyField, type NodeLayout } from "@/components/world/StrategyField";
+  SignalField,
+  type NodePlacement,
+} from "@/components/college/SignalField";
 import { WorldOutro } from "@/components/world/WorldOutro";
 
 export const metadata: Metadata = {
@@ -14,34 +13,29 @@ export const metadata: Metadata = {
   description: WORLDS.college.longThesis,
 };
 
-/** Loose, kinetic constellation — the flagship node sits largest. */
-const POSITIONS: Record<string, NodeLayout> = {
-  "treehacks-builder-guide": { x: 25, y: 46, size: 96 },
-  "university-builder-program": { x: 65, y: 27, size: 60 },
-  "campus-ambassador-network": { x: 77, y: 62, size: 58 },
-  "innovation-labs-fellowships": { x: 42, y: 75, size: 58 },
+/**
+ * Kinetic constellation placement. The flagship (`treehacks-builder-guide`)
+ * sits largest and most prominent; the others orbit loosely with room below
+ * each for its label + hover reveal.
+ */
+const PLACEMENTS: Record<string, NodePlacement> = {
+  "treehacks-builder-guide": { x: 27, y: 44, size: 128 },
+  "university-builder-program": { x: 66, y: 28, size: 78 },
+  "campus-ambassador-network": { x: 78, y: 63, size: 74 },
+  "innovation-labs-fellowships": { x: 43, y: 74, size: 72 },
 };
 
 export default function CollegePage() {
-  const world = WORLDS.college;
   const strategies = getStrategiesByWorld("college");
 
   return (
     <>
-      <WorldHero
-        world={world}
-        count={countByWorld("college")}
-        surfaces={surfacesForWorld("college")}
-        accent="college"
-      />
-      <section className="py-10 sm:py-14">
-        <StrategyField
-          strategies={strategies}
-          positions={POSITIONS}
-          accent="college"
-          temperament="kinetic"
-        />
+      <CollegeHero />
+
+      <section className="pb-20 pt-4 sm:pb-28">
+        <SignalField strategies={strategies} placements={PLACEMENTS} />
       </section>
+
       <WorldOutro from="college" />
     </>
   );

@@ -91,6 +91,17 @@ export interface LensTags {
   outcome: string;
 }
 
+/**
+ * Optional event/partner brand for a concept. When present, the detail page
+ * adopts the brand's palette (illustrative only — an original stylized mark,
+ * never a reproduction of a trademark, and never implying affiliation).
+ */
+export interface StrategyBrand {
+  name: string;
+  accent: string; // hex
+  accentDeep: string; // hex
+}
+
 export interface Strategy {
   id: string;
   slug: string;
@@ -122,6 +133,8 @@ export interface Strategy {
   lens: LensTags;
   /** Marks the single flagship experience with its own bespoke page. */
   flagship?: boolean;
+  /** Optional event/partner palette adopted by the detail page. */
+  brand?: StrategyBrand;
 }
 
 export interface WorldMeta {

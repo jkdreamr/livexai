@@ -47,10 +47,10 @@ export function WorldOutro({ from }: { from: World }) {
           </Link>
 
           <Link
-            href="/system"
+            href="/docs"
             className="cursor-target group flex items-center justify-between rounded-xl border border-line px-6 py-4 text-ink-soft transition-colors hover:bg-white/[0.02] hover:text-ink"
           >
-            <span className="label-tight">How the Surface Map works · System overview</span>
+            <span className="label-tight">The thinking behind the map · Docs</span>
             <span aria-hidden className="transition-transform group-hover:translate-x-1">
               →
             </span>
