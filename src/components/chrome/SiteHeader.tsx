@@ -40,7 +40,7 @@ export function SiteHeader() {
           <span className="font-display text-[1.35rem] leading-none tracking-tight text-ink transition-opacity group-hover:opacity-80">
             LiveX
           </span>
-          <span className="label-tight text-ink-dim transition-colors group-hover:text-ink-soft">
+          <span className="label-tight hidden text-ink-dim transition-colors group-hover:text-ink-soft sm:inline">
             / Surface&nbsp;Map
           </span>
         </Link>
