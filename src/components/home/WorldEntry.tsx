@@ -56,7 +56,7 @@ export function WorldEntry() {
       {/* Hero */}
       <div className="relative z-10 flex flex-col items-center px-6 text-center">
         <DecryptedText
-          text="LIVEX AI"
+          text="GTM + Partnerships"
           animateOn="view"
           sequential
           speed={38}
@@ -65,7 +65,7 @@ export function WorldEntry() {
 
         <div className="text-display fluid-h1 mt-8 max-w-3xl leading-[1.04] text-ink">
           <TrueFocus
-            sentence="One agent, every surface"
+            sentence="Joshua's thoughts and demos"
             blurAmount={4}
             borderColor="#2f80ff"
             glowColor="rgba(0,102,255,0.5)"

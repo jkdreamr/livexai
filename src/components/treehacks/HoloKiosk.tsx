@@ -1,10 +1,6 @@
 "use client";
 
-/* eslint-disable react-hooks/immutability -- This is an imperative
-   react-three-fiber scene. useFrame mutates three.js materials and objects
-   every frame by design, which the React Compiler purity rules do not model. */
-
-import { Suspense, useEffect, useMemo, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
   Environment,
@@ -12,7 +8,6 @@ import {
   MeshTransmissionMaterial,
   MeshReflectorMaterial,
   PresentationControls,
-  useAnimations,
   useGLTF,
 } from "@react-three/drei";
 import * as THREE from "three";
@@ -20,11 +15,12 @@ import { useIsMobile, useReducedMotion } from "@/lib/hooks";
 import type { AgentMood } from "./HoloAgent";
 
 /**
- * The LiveX guide the way LiveX ships it in the field: a full 3D human
- * projected inside a glass cylinder on a lit base. Real glass (transmission),
- * a reflective plinth, top and bottom light rings, and a rigged figure you can
- * grab and turn. It idles and breathes, glows green while it listens, and
- * shifts toward violet while it scans. Static under reduced motion.
+ * The LiveX guide the way LiveX ships it in the field: a real person projected
+ * inside a glass cylinder on a lit base. Real glass (transmission), a reflective
+ * plinth, top and bottom light rings, and a scanned human figure you can grab
+ * and turn. The figure keeps its own detail but wears a holographic treatment,
+ * a green fresnel rim and travelling scanlines, and shifts toward violet while
+ * it scans. Static under reduced motion.
  */
 
 const GREEN = "#2fe08a";
@@ -32,89 +28,86 @@ const VIOLET = "#9d7bff";
 const GREEN_C = new THREE.Color(GREEN);
 const VIOLET_C = new THREE.Color(VIOLET);
 
-const MODEL = "/models/agent.glb";
+const MODEL = "/models/craig.glb";
+// The scan is authored facing +X, so turn it a quarter turn to face the camera.
+const BASE_ROT = -Math.PI / 2;
 useGLTF.preload(MODEL);
 
 /* -- the projected human --------------------------------------------------- */
 
 function HoloHuman({ mood, reduced }: { mood: AgentMood; reduced: boolean }) {
-  const group = useRef<THREE.Group>(null);
-  const { scene, animations } = useGLTF(MODEL);
-  const { actions, names } = useAnimations(animations, group);
-
-  const mat = useMemo(() => {
-    const m = new THREE.MeshStandardMaterial({
-      color: new THREE.Color("#04140e"),
-      emissive: new THREE.Color(GREEN),
-      emissiveIntensity: 0.72,
-      roughness: 0.85,
-      metalness: 0,
-      transparent: true,
-      opacity: 0.92,
-      side: THREE.FrontSide,
-    });
-    m.onBeforeCompile = (shader) => {
-      shader.uniforms.uTime = { value: 0 };
-      m.userData.shader = shader;
-      shader.vertexShader = shader.vertexShader
-        .replace("#include <common>", "#include <common>\nvarying vec3 vHoloN;\nvarying vec3 vHoloV;")
-        .replace(
-          "#include <defaultnormal_vertex>",
-          "#include <defaultnormal_vertex>\nvHoloN = normalize(transformedNormal);"
-        )
-        .replace(
-          "#include <project_vertex>",
-          "#include <project_vertex>\nvHoloV = normalize(-mvPosition.xyz);"
-        );
-      shader.fragmentShader = shader.fragmentShader
-        .replace(
-          "#include <common>",
-          "#include <common>\nvarying vec3 vHoloN;\nvarying vec3 vHoloV;\nuniform float uTime;"
-        )
-        .replace(
-          "#include <emissivemap_fragment>",
-          `#include <emissivemap_fragment>
-           float holoF = pow(1.0 - clamp(dot(normalize(vHoloN), normalize(vHoloV)), 0.0, 1.0), 2.0);
-           float holoScan = smoothstep(0.55, 1.0, sin(gl_FragCoord.y * 1.15 - uTime * 6.0));
-           totalEmissiveRadiance += emissive * (holoF * 2.6 + holoScan * 0.35);`
-        );
-    };
-    return m;
-  }, []);
+  const spin = useRef<THREE.Group>(null);
+  const { scene } = useGLTF(MODEL);
+  const mats = useRef<THREE.MeshStandardMaterial[]>([]);
+  const shaders = useRef<{ uniforms: { uTime: { value: number } } }[]>([]);
 
   useEffect(() => {
+    const collected: THREE.MeshStandardMaterial[] = [];
+    shaders.current = [];
     scene.traverse((o) => {
       const mesh = o as THREE.Mesh;
-      if (mesh.isMesh) {
-        mesh.material = mat;
-        mesh.frustumCulled = false;
-        mesh.castShadow = false;
-      }
+      if (!mesh.isMesh) return;
+      mesh.frustumCulled = false;
+      mesh.castShadow = false;
+      const list = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      list.forEach((m) => {
+        const sm = m as THREE.MeshStandardMaterial;
+        sm.transparent = true;
+        sm.opacity = 0.95;
+        sm.roughness = 0.72;
+        sm.metalness = 0;
+        sm.emissive = new THREE.Color(GREEN);
+        sm.emissiveIntensity = 0.9;
+        sm.onBeforeCompile = (shader) => {
+          shader.uniforms.uTime = { value: 0 };
+          shaders.current.push(shader as unknown as { uniforms: { uTime: { value: number } } });
+          shader.vertexShader = shader.vertexShader
+            .replace("#include <common>", "#include <common>\nvarying vec3 vHoloN;\nvarying vec3 vHoloV;")
+            .replace("#include <defaultnormal_vertex>", "#include <defaultnormal_vertex>\nvHoloN = normalize(transformedNormal);")
+            .replace("#include <project_vertex>", "#include <project_vertex>\nvHoloV = normalize(-mvPosition.xyz);");
+          shader.fragmentShader = shader.fragmentShader
+            .replace(
+              "#include <common>",
+              "#include <common>\nvarying vec3 vHoloN;\nvarying vec3 vHoloV;\nuniform float uTime;"
+            )
+            .replace(
+              "#include <map_fragment>",
+              "#include <map_fragment>\ndiffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.16, 0.86, 0.53), 0.42);"
+            )
+            .replace(
+              "#include <emissivemap_fragment>",
+              `#include <emissivemap_fragment>
+               float holoF = pow(1.0 - clamp(dot(normalize(vHoloN), normalize(vHoloV)), 0.0, 1.0), 2.2);
+               float holoScan = smoothstep(0.5, 1.0, sin(gl_FragCoord.y * 1.05 - uTime * 6.0));
+               totalEmissiveRadiance += emissive * (holoF * 2.2 + holoScan * 0.22);`
+            );
+        };
+        sm.needsUpdate = true;
+        collected.push(sm);
+      });
     });
-  }, [scene, mat]);
-
-  useEffect(() => {
-    const name = names.find((n) => /idle/i.test(n)) ?? names[0];
-    const action = name ? actions[name] : null;
-    action?.reset().fadeIn(0.4).play();
-    if (reduced) action?.halt(0);
-    return () => {
-      action?.fadeOut(0.2);
-    };
-  }, [actions, names, reduced]);
+    mats.current = collected;
+  }, [scene]);
 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
-    const shader = mat.userData.shader as { uniforms: { uTime: { value: number } } } | undefined;
-    if (shader && !reduced) shader.uniforms.uTime.value = t;
-    mat.emissive.lerp(mood === "scanning" ? VIOLET_C : GREEN_C, 0.05);
-    mat.emissiveIntensity = 0.72 + (reduced ? 0 : Math.sin(t * 7) * 0.05);
-    if (group.current && !reduced) group.current.rotation.y = Math.PI + Math.sin(t * 0.3) * 0.12;
+    if (!reduced) shaders.current.forEach((s) => (s.uniforms.uTime.value = t));
+    const target = mood === "scanning" ? VIOLET_C : GREEN_C;
+    mats.current.forEach((m) => {
+      m.emissive.lerp(target, 0.05);
+      m.emissiveIntensity = 0.9 + (reduced ? 0 : Math.sin(t * 7) * 0.06);
+    });
+    if (spin.current && !reduced) {
+      spin.current.position.y = Math.sin(t * 1.1) * 0.02;
+      spin.current.rotation.y = BASE_ROT + Math.sin(t * 0.3) * 0.1;
+    }
   });
 
   return (
-    <group ref={group} position={[0, -1.42, 0]} scale={1.32} rotation={[0, Math.PI, 0]}>
-      <primitive object={scene} />
+    <group ref={spin} rotation={[0, BASE_ROT, 0]}>
+      <group scale={0.6945} position={[-1.0357, -1.4, -1.131]}>
+        <primitive object={scene} />
+      </group>
     </group>
   );
 }
@@ -255,11 +248,12 @@ export function HoloKiosk({ mood = "idle" }: { mood?: AgentMood }) {
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       style={{ touchAction: "pan-y" }}
     >
-      <ambientLight intensity={0.45} />
-      <spotLight position={[0, 4.5, 3]} angle={0.5} penumbra={1} intensity={0.8} color="#dfeeff" />
+      <ambientLight intensity={0.5} />
+      <spotLight position={[0, 4.5, 3]} angle={0.5} penumbra={1} intensity={0.85} color="#dfeeff" />
       <pointLight position={[0, -1.1, 0.4]} intensity={2.4} distance={3.4} color={GREEN} />
       <pointLight position={[2.2, 1.4, -1.5]} intensity={1.5} distance={7} color={VIOLET} />
-      <pointLight position={[-2, 0.6, 2]} intensity={0.8} distance={7} color={GREEN} />
+      <pointLight position={[-2, 0.6, 2]} intensity={1} distance={7} color={GREEN} />
+      <pointLight position={[0, 1.6, 2.4]} intensity={0.7} distance={6} color="#eafff6" />
 
       <PresentationControls
         global

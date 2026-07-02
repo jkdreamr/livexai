@@ -15,8 +15,9 @@ export function SiteFooter() {
     <footer className="relative z-10 border-t border-line bg-abyss">
       <div className="container-x grid gap-12 py-16 md:grid-cols-[1.5fr_1fr_1fr] md:py-20">
         <div className="max-w-md">
-          <div className="flex items-baseline gap-2">
-            <span className="font-display text-xl text-ink">LiveX</span>
+          <div className="flex items-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/livex-logo-alt.svg" alt="LiveX AI" className="h-5 w-auto" />
           </div>
           <p className="mt-5 text-sm leading-relaxed text-ink-dim">
             An internal strategy universe for how a single LiveX intelligence

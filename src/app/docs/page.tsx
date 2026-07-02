@@ -79,29 +79,6 @@ const SIGNALS = [
   },
 ];
 
-const RISKS = [
-  {
-    risk: "A loud, crowded room degrades voice and attention.",
-    mitigation:
-      "Design tap-first with voice as an accelerant. Keep the opening ask to one question that works in about three seconds.",
-  },
-  {
-    risk: "The handoff feels like a gimmick if the context is thin.",
-    mitigation:
-      "Make the mobile surface deliver something the room could not: a specific route, a match, or a framework. Continuity has to be felt, not claimed.",
-  },
-  {
-    risk: "Partnership, placement, and privacy approvals.",
-    mitigation:
-      "Treat opt-in, data handling, and on-site placement as day-one constraints, agreed with organizers before we build.",
-  },
-  {
-    risk: "Hardware and connectivity on a crowded venue network.",
-    mitigation:
-      "Degrade gracefully. The guide and handoff have to survive flaky Wi-Fi and fall back to a lightweight mobile path.",
-  },
-];
-
 /* The three actions a builder can take on the mobile guide, plus the chatbot. */
 const BUILDER_ACTIONS = [
   {
@@ -327,48 +304,6 @@ export default function DocsPage() {
                 </div>
               ))}
             </dl>
-          </DocsSection>
-
-          <DocsSection
-            id="risks-dependencies"
-            eyebrow="College · TreeHacks"
-            title="Risks and dependencies"
-            accent="college"
-          >
-            <p className="body-measure text-ink-soft">
-              The honest list of what could go wrong, each paired with how we
-              would hold it down.
-            </p>
-            <ul className="mt-8 divide-y divide-line border-y border-line">
-              {RISKS.map((r) => (
-                <li key={r.risk} className="py-4">
-                  <p className="text-sm text-ink">{r.risk}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-ink-dim">
-                    {r.mitigation}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </DocsSection>
-
-          <DocsSection
-            id="next-move"
-            eyebrow="College · TreeHacks"
-            title="Recommended next move"
-            accent="college"
-          >
-            <div className="rounded-xl border border-line bg-charcoal p-7">
-              <p className="label-tight mb-3 text-college">Next 30 days</p>
-              <p className="font-display text-xl text-ink">
-                Prototype the handoff, not the hologram.
-              </p>
-              <p className="body-measure mt-3 text-ink-soft">
-                Build the single moment where a stated intent jumps from a
-                physical display to a phone with zero re-entry. If that one thing
-                lands, the rest of the arc is production work. If it does not, we
-                learn that cheaply and before any of the harder pieces.
-              </p>
-            </div>
           </DocsSection>
 
           {/* ==================== STANDARD ==================== */}

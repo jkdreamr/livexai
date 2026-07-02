@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { ease } from "@/lib/motion";
+import { useReducedMotion } from "@/lib/hooks";
 import { Chatbot } from "./Chatbot";
 import type { AgentMood } from "./HoloAgent";
 
@@ -201,18 +202,142 @@ export function SponsorsPanel({ setMood }: { setMood: (m: AgentMood) => void }) 
           {mode.kind === "brainstorm" && (
             <motion.div key={`bs${mode.i}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col">
               <p className={cn("label", ACCENT[SPONSORS[mode.i].accent].text)}>Ideas · {SPONSORS[mode.i].name}</p>
-              <ul className="mt-4 flex flex-col gap-2">
-                {SPONSORS[mode.i].ideas.map((idea, k) => (
-                  <motion.li key={idea} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: k * 0.08, duration: 0.4, ease: ease.out }} className="flex items-start gap-3 rounded-lg border border-line bg-white/[0.02] p-3 text-sm text-ink-soft">
-                    <span className={cn("mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-[0.65rem]", ACCENT[SPONSORS[mode.i].accent].num)}>{k + 1}</span>
-                    {idea}
-                  </motion.li>
-                ))}
-              </ul>
+              <IdeaStream key={mode.i} ideas={SPONSORS[mode.i].ideas} accent={SPONSORS[mode.i].accent} />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
     </div>
+  );
+}
+
+/* Brainstorm reads like a model answering: a beat of thinking, then ideas
+   stream in one line at a time with a caret. Timers only, so the React
+   Compiler stays happy. Remounted per sponsor via key, so no reset needed. */
+function IdeaStream({ ideas, accent }: { ideas: string[]; accent: Accent }) {
+  const reduced = useReducedMotion();
+  const a = ACCENT[accent];
+  const [done, setDone] = useState<string[]>([]);
+  const [typing, setTyping] = useState("");
+  const [phase, setPhase] = useState<"thinking" | "generating" | "ready">("thinking");
+
+  useEffect(() => {
+    let cancelled = false;
+    const timers: number[] = [];
+
+    if (reduced) {
+      timers.push(
+        window.setTimeout(() => {
+          if (cancelled) return;
+          setDone(ideas);
+          setPhase("ready");
+        }, 0)
+      );
+      return () => {
+        cancelled = true;
+        timers.forEach((t) => window.clearTimeout(t));
+      };
+    }
+
+    let line = 0;
+    let ch = 0;
+    const tick = () => {
+      if (cancelled) return;
+      if (line >= ideas.length) {
+        setPhase("ready");
+        return;
+      }
+      const text = ideas[line];
+      ch += 1;
+      setTyping(text.slice(0, ch));
+      if (ch >= text.length) {
+        const finished = text;
+        setDone((d) => [...d, finished]);
+        setTyping("");
+        line += 1;
+        ch = 0;
+        timers.push(window.setTimeout(tick, 360));
+      } else {
+        timers.push(window.setTimeout(tick, 20));
+      }
+    };
+    timers.push(
+      window.setTimeout(() => {
+        if (cancelled) return;
+        setPhase("generating");
+        tick();
+      }, 750)
+    );
+
+    return () => {
+      cancelled = true;
+      timers.forEach((t) => window.clearTimeout(t));
+    };
+  }, [ideas, reduced]);
+
+  return (
+    <div className="mt-4 flex flex-col">
+      <div className="flex items-center gap-2">
+        <span className={cn("grid size-5 place-items-center rounded-full", a.num)}>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+            <path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z" />
+          </svg>
+        </span>
+        <span className="label-tight text-ink-dim">
+          {phase === "thinking" ? "Thinking" : phase === "generating" ? "Generating" : "Ready"}
+        </span>
+        {phase !== "ready" && !reduced && <Dots />}
+      </div>
+
+      <ul className="mt-4 flex flex-col gap-2">
+        {done.map((idea, k) => (
+          <IdeaRow key={idea} n={k + 1} a={a}>
+            {idea}
+          </IdeaRow>
+        ))}
+        {typing && (
+          <IdeaRow n={done.length + 1} a={a}>
+            {typing}
+            <motion.span
+              aria-hidden
+              className={cn("ml-0.5 inline-block h-3.5 w-[3px] translate-y-[2px] rounded-[1px]", a.dot)}
+              animate={{ opacity: [1, 1, 0, 0] }}
+              transition={{ duration: 0.9, repeat: Infinity, times: [0, 0.5, 0.5, 1] }}
+            />
+          </IdeaRow>
+        )}
+      </ul>
+
+      <p className="mt-4 label-tight text-ink-faint">A live model tailors these to your build.</p>
+    </div>
+  );
+}
+
+function Dots() {
+  return (
+    <span className="flex items-center gap-1">
+      {[0, 1, 2].map((i) => (
+        <motion.span
+          key={i}
+          className="size-1 rounded-full bg-ink-dim"
+          animate={{ opacity: [0.2, 1, 0.2] }}
+          transition={{ duration: 1, repeat: Infinity, delay: i * 0.18 }}
+        />
+      ))}
+    </span>
+  );
+}
+
+function IdeaRow({ n, a, children }: { n: number; a: (typeof ACCENT)[Accent]; children: ReactNode }) {
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: ease.out }}
+      className="flex items-start gap-3 rounded-lg border border-line bg-white/[0.02] p-3 text-sm text-ink-soft"
+    >
+      <span className={cn("mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-[0.65rem]", a.num)}>{n}</span>
+      <span className="min-w-0">{children}</span>
+    </motion.li>
   );
 }
