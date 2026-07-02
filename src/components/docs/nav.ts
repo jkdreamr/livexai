@@ -28,6 +28,19 @@ export interface DocsWorldNode {
 
 export const DOCS_OUTLINE: DocsWorldNode[] = [
   {
+    id: "my-thoughts",
+    label: "My Thoughts",
+    note: "Personal notes",
+    accent: "brand",
+    branches: [
+      {
+        id: "my-thoughts-branch",
+        label: "Notes",
+        children: [{ id: "my-thoughts-notes", label: "Working notes" }],
+      },
+    ],
+  },
+  {
     id: "college",
     label: "College",
     note: "Campus & students",

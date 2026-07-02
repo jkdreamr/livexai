@@ -36,7 +36,7 @@ export const STRATEGIES: Strategy[] = [
     flagship: true,
     priority: 1,
     visualTheme: "constellation",
-    brand: { name: "TreeHacks", accent: "#2f80ff", accentDeep: "#0066ff" },
+    brand: { name: "TreeHacks", accent: "#2fe08a", accentDeep: "#14b877" },
     oneLineThesis:
       "A LiveX guide that greets a builder in the room and stays with them, from the hackathon floor to their phone to the weeks after.",
     strategicQuestion:

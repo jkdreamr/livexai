@@ -31,7 +31,8 @@ where each one is used. Add new ones to the bottom as we go.
 | 13 | **Chat typing + thinking dots** | ✅ | TreeHacks demo chatbot (Chatbot.tsx), replies typed via Typewriter |
 | 14 | **RotatingText** (React Bits) | ✅ `src/components/reactbits/RotatingText.tsx` | College header: "College" + rotating students / builders / events / classes |
 | 15 | **HoloMap** — tilted holographic floor plan with an animated route | ✅ `src/components/treehacks/HoloMap.tsx` | TreeHacks demo → Events (directions) |
-| 16 | **HoloAgent** — projected holographic guide that reacts + tilts | ✅ `src/components/treehacks/HoloAgent.tsx` | TreeHacks demo (the agent) |
+| 16 | **HoloKiosk** — a rigged 3D human projected in a glass cylinder (WebGL: transmission glass, reflective plinth, light rings, fresnel + scanline hologram shader, drag to rotate) | ✅ `src/components/treehacks/HoloKiosk.tsx` (model: `public/models/agent.glb`) | TreeHacks demo (the guide) |
+| 17 | **TreeHacks event palette** — the demo wears the event's own colors (vibrant green + cosmic violet), scoped by re-pointing the brand tokens on the page | ✅ `globals.css` tokens `--color-tree` / `--color-grape`, applied in `strategy/treehacks-builder-guide/page.tsx` | Whole TreeHacks demo |
 
 ### Built and available to slot in (not currently placed)
 The interaction-kit gallery was removed (a gallery is not integration). These stay in `src/components/kit/` ready to drop into a real spot on request: **Keyboard**, **VideoReveal** (clip-path, no video asset yet), **FloatingPanel**, **MorphSurface**, **MetalButton** (`metal-fx`), **HeroColorPanels** (`@paper-design/shaders-react`), **AnimatedIcons** (hamburger / volume / arrow).

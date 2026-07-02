@@ -160,6 +160,25 @@ export default function DocsPage() {
         </div>
 
         <div className="flex flex-col gap-12">
+          {/* ==================== MY THOUGHTS ==================== */}
+          <DocsSection
+            id="my-thoughts-notes"
+            eyebrow="My Thoughts"
+            title="My Thoughts"
+            accent="brand"
+          >
+            <div className="rounded-xl border border-dashed border-line-strong p-7">
+              <p className="label-tight mb-3 text-brand">Working notes</p>
+              <div className="body-measure flex flex-col gap-4 text-ink-soft">
+                <p>
+                  A space for my own running notes on these bets. What I believe,
+                  what I am unsure about, and what would change my mind.
+                </p>
+                <p className="text-ink-faint">To be filled in.</p>
+              </div>
+            </div>
+          </DocsSection>
+
           {/* ==================== COLLEGE · TREEHACKS ==================== */}
           <DocsSection
             id="why-treehacks"
