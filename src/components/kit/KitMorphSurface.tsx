@@ -24,7 +24,6 @@ export default function KitMorphSurface() {
   function send() {
     const v = value.trim();
     if (!v) return;
-    // eslint-disable-next-line no-console
     console.log("[LiveX feedback]", v);
     setValue("");
     setOpen(false);

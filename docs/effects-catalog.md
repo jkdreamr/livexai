@@ -26,16 +26,18 @@ where each one is used. Add new ones to the bottom as we go.
 | 8 | **AnimatedArrow** (Skiper99 arrow) — chevron grows into an arrow on hover | ✅ `src/components/skiper/AnimatedArrow.tsx` | College flagship feature · Standard · RelatedStrategies · TreeHacks "case" link |
 | 9 | **Typewriter** — types through strings | ✅ `src/components/skiper/Typewriter.tsx` | TreeHacks mobile handoff message · Standard exploration |
 | 10 | **Terminal** — mac-window typing terminal | ✅ `src/components/skiper/Terminal.tsx` | Docs ("add a strategy") · Standard exploration ("field open") |
-| 11 | **Skiper99 icons** — hamburger-morph + volume-mute micro-icons | 📥 | Same source as AnimatedArrow. Good for a mobile menu toggle / a mute control. Deps: none (inline SVG + framer). |
-| 12 | **VideoPopover** (Skiper67) — click a video → clip-path expand to a player | 📥 | Great for a future "demo reel". Deps: `media-chrome`; needs a video asset in `/public`. |
-| 13 | **Keyboard** — interactive keyboard with sound | 📥 | Playful builder moment (College). Deps: a `@/components/ui/keyboard` base. |
-| 14 | **Dock** — macOS-style magnifying dock | 📥 | Surface/quick-nav idea. Deps: a `@/components/ui/dock` base; source uses external mesh-gradient images (swap for local). |
-| 15 | **FloatingPanel** — morphing popover (note / color / actions) | 📥 | An "add your own concept" affordance. Deps: `@/components/ui/floating-panel`. |
-| 16 | **MorphSurface** — collapsed pill morphs into an input surface | 📥 | A feedback / contact surface (Docs). Deps: `@/components/ui/morph-surface`. |
-| 17 | **ExpandableCard** — cards that expand in place (Design Sync / Product / Weather) | 📥 | Note: we deliberately avoid "cards" for concepts; useful for a Docs FAQ or detail module. Deps: `@/components/ui/expandable`. |
-| 18 | **MetalButton** — liquid-metal ring button | 📥 | A signature CTA (e.g. landing "Enter", TreeHacks). Deps: `metal-fx` (WebGL) + a shadcn `Button`. |
-| 19 | **HeroColorPanels** — shader hero with animated color panels | 📥 | An alternate hero treatment. Deps: `@paper-design/shaders-react` (or similar) + a `@/components/ui/hero-color-panel` base. |
+| 11 | **Animated icons** (Skiper99) — hamburger-morph + volume-mute + arrow | ✅ `src/components/kit/KitAnimatedIcons.tsx` | Docs → Interaction kit |
+| 12 | **VideoReveal** (Skiper67) — clip-path expand from a thumbnail w/ tracking "Play" label | ✅ `src/components/kit/KitVideoReveal.tsx` | Docs → Interaction kit (reveals a shader loop; no external video needed) |
+| 13 | **Keyboard** — interactive keycaps (real keydown + optional muted click) | ✅ `src/components/kit/KitKeyboard.tsx` | Docs → Interaction kit |
+| 14 | **Dock** — macOS-style magnifying dock | ✅ `src/components/chrome/DockNav.tsx` + `kit/KitDockDemo.tsx` | **Site nav** + Docs → Interaction kit |
+| 15 | **FloatingPanel** — trigger morphs open into a note panel | ✅ `src/components/kit/KitFloatingPanel.tsx` | Docs → Interaction kit |
+| 16 | **MorphSurface** — collapsed pill morphs into an input | ✅ `src/components/kit/KitMorphSurface.tsx` | Docs → Interaction kit |
+| 17 | **ExpandableCard** — card expands in place with staggered reveal | ✅ `src/components/kit/KitExpandable.tsx` | Docs → Interaction kit (themed to a LiveX handoff) |
+| 18 | **MetalButton** — liquid-metal ring button (`metal-fx`) | ✅ `src/components/kit/KitMetalButton.tsx` | Docs → Interaction kit |
+| 19 | **HeroColorPanels** — shader hero (`@paper-design/shaders-react` MeshGradient) | ✅ `src/components/kit/KitHeroColorPanels.tsx` | Docs → Interaction kit (LiveX blues) |
 | 20 | **RotatingText** (React Bits) — per-character rotating word | ✅ `src/components/reactbits/RotatingText.tsx` | College header: "College" + rotating students / builders / events / classes |
+
+> Every Batch-2 effect is now live. Most are showcased in the **Docs → Interaction kit** gallery; the magnifying **Dock** doubles as the site nav.
 
 ## Backgrounds (per-page, so no two pages feel the same)
 

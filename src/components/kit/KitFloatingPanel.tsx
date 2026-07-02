@@ -31,7 +31,6 @@ export default function KitFloatingPanel() {
   }, [open]);
 
   function submit() {
-    // eslint-disable-next-line no-console
     console.log("[LiveX note]", note.trim());
     setNote("");
     setOpen(false);

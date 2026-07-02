@@ -5,7 +5,7 @@ import DecryptedText from "@/components/reactbits/DecryptedText";
 export function DocsEyebrow() {
   return (
     <DecryptedText
-      text="LIVEX · SURFACE MAP · FIELD NOTES"
+      text="LIVEX AI · FIELD NOTES"
       animateOn="view"
       sequential
       speed={30}
